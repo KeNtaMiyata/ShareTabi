@@ -45,3 +45,10 @@
 
 Honoka Miki
 その他3名
+
+1854 miyata
+
+1917 miyata2
+
+1940 tanaka
+
