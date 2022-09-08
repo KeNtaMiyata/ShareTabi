@@ -55,3 +55,44 @@ class Favorite(db.Model):
 @app.route("/", methods=["GET"])
 def top():
     return render_template("top.html")
+
+
+# /travels/4/ でコメント送信ボタンを押すとここに来るようにする
+# まだ試していない
+@app.route("/travels/<int:travel_id>/comments", methods=["POST","PUT", "DELETE"])
+def comment(travel_id):
+    if request.method == "POST":
+        body = request.form.get("body")
+        comment = Comment(body=body, user_id=current_user.id, travel_id=travel_id)
+        db.session.add(comment)
+        db.session.commit()
+        return redirect(f"travels/{ travel_id }")
+    
+    elif request.method == "PUT":
+        comment = Comment.query.filter(Comment.user_id == current_user.id, Comment.travel_id == travel_id).one()
+        comment.body=request.form.get("body")
+        db.session.add(comment)
+        db.session.commit()
+        return redirect(f"travels/{ travel_id }")
+
+    else: # request.method == "DELETE":
+        comment = Comment.query.filter(Comment.user_id == current_user.id, Comment.travel_id == travel_id).one()
+        db.session.delete(comment)
+        db.session.commit()
+        return redirect(f"travels/{ travel_id }")
+
+
+@app.route("/travels/<int:travel_id>/favorites", methods=["POST", "DELETE"])
+def favorite(travel_id):
+    if request.method == "POST":
+        favorite=Favorite(user_id=current_user.id, travel_id=travel_id)
+        db.session.add(favorite)
+        db.session.commit()
+        return redirect(f"travels/{ travel_id }")
+
+    else:  # request.method == "DELETE":
+        favorite = Favorite.query.filter(Favorite.user_id == current_user.id, Favorite.travel_id == travel_id).one()
+        db.session.delete(favorite)
+        db.session.commit()
+        return redirect(f"travels/{ travel_id }")
+
