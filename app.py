@@ -55,3 +55,13 @@ class Favorite(db.Model):
 @app.route("/", methods=["GET"])
 def top():
     return render_template("top.html")
+
+
+# 新規投稿の処理の中に付け足すもの
+# if request.method == 'POST': この箇所に
+    # file = request.files['image']
+    # new_filename = f'{ current_user.id }_{ travel_id }_{ title }'
+    # os.rename(file.filename, new_filename) # ここ試してみないとわからない
+    # file.save(os.path.join('./static/images', file.filename))
+    # return redirect(...)
+
