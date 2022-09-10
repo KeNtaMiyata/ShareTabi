@@ -10,9 +10,17 @@ import pytz
 app = Flask(__name__)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///sharetabi.db'
+# シークレットキーの設定。セッション情報を暗号化するための設定。
+app.config['SEACRET_KEY'] = os.urandom(24)
 app.config["TEMPLATES_AUTO_RELOAD"] = True # Ensure templates are auto-reloaded
 
 db = SQLAlchemy(app)
+
+# login_manager変数にログイン機能を持たせる
+login_manager = LoginManager()
+# アプリケーションの紐づけ
+login_manager.init_app(app)
+
 
 # models
 class User(UserMixin, db.Model):
@@ -52,6 +60,10 @@ class Favorite(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     travel_id = db.Column(db.Integer, db.ForeignKey('travel.id'), nullable=False)
     
+# セッション情報の確認
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
 
 @app.route("/", methods=["GET"])
 def top():
@@ -64,44 +76,84 @@ def register():
     if (request.method == "POST"):
         
         # 記入情報
-        email = request.form.get('email')
         username = request.form.get('username')
         password = request.form.get('password')
         confirmation = request.form.get('confirmation')
+        email = request.form.get('email')
         
         # 空欄チェック
         if not username:
 
-            return flash('ユーザー名を入力してください', 'warning')
+            flash('ユーザー名を入力してください', 'warning')
+            return render_template("register.html")
 
         elif not password:
 
-            return flash('パスワードを入力してください', 'warning')
+            flash('パスワードを入力してください', 'warning')
+            return render_template("register.html")
 
         elif not confirmation:
 
-            return flash('パスワードをもう一度入力してください', 'warning')
+            flash('パスワードをもう一度入力してください', 'warning')
+            return render_template("register.html")
         
         elif not email:
             
-            return flash('メールアドレスを入力してください', 'warning')
+            flash('メールアドレスを入力してください', 'warning')
+            return render_template("register.html")
 
         # 同じパスワードが入力されているか
         if password != confirmation:
 
-            return flash('パスワードが一致しません', 'warning')
+            flash('パスワードが一致しません', 'warning')
+            return render_template("register.html")
 
         # パスワードをハッシュ化
-        hash = generate_password_hash(password)
+        hash_pass = generate_password_hash(password)
         
         # 記入情報を登録する
         try:
-            session.add(User(name=username, password=password, email=email))
-            flash('登録に成功しました', 'success')
-            return redirect('/')
+            user = User(name=username, password=hash_pass, email=email)
+            session.add(user)
+            session.commit()
 
         except:
-            flash('ユーザー名がすでに使われているか、メールアドレスが正しくありません')
+            flash('ユーザー名がすでに使われているか、メールアドレスが正しくありません', 'warning')
+            return render_template("register.html")
+        
+        flash('登録に成功しました', 'success')
+        return redirect('/')
 
     else:
         return render_template("register.html")
+    
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    """login user"""
+    if (request.method == "POST"):
+        username = request.form.get('username')
+        password = request.form.get('password')
+        
+        if not username or not password:
+            flash('ユーザー名またはパスワードを入力してください', 'warning')
+            return render_template(login.html)
+        
+        # usernameが一致するもの
+        user = User.query.filter_by(username=username)
+        
+        if check_password_hash(user.password, password):
+            login_user(user)
+            return redirect('/')
+        
+        else:
+            flash('パスワードが間違っています', 'error')
+            return render_template(login.html)
+        
+    else:
+        return render_template("login.html")
+    
+@app.route("/logout", methods=["GET"])
+@login_required
+def logout():
+    logout_user()
+    return redirect('/login')
