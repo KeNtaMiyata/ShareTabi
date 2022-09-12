@@ -13,8 +13,22 @@
         {% endif %}
     {% endwith %}
 
-    {% for travel in travels %}
+    <table>
+        <thead>
 
-        
-    {% endfor %}
+        </thead>
+        <tbody>
+            {% for travel in travels %}
+            <tr>
+                <td>{{ travel.created_at}}</td>
+                <td>{{ travel.title }}</td>
+                <td>{{ travel.date }}</td>
+                <td>{{ travel.location }}</td>
+                <td>{{ travel.report }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+
+    </table>
+    
 {% endblock %}

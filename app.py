@@ -95,9 +95,9 @@ def travels():
 
 # 個々の投稿を表示するページ
 @app.route("/travels/<int:travel_id>", methods=["GET","POST","DELETE"])
-def travel():
+def travel(travel_id):
     if (request.method == "GET"):  # 表示
-
+        travel = Travel.query.get(travel_id)
         pass
 
     elif (request.method == "PUT"): # 編集
@@ -106,5 +106,5 @@ def travel():
     else: # request.method == "DELETE":
         pass
 
-    return render_template("show_travel.html")
+    return render_template("show_travel.html", travel=travel)
 
