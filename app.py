@@ -1,4 +1,4 @@
-from flask import Flask, redirect, render_template, request, session
+from flask import Flask, flash, redirect, render_template, request, session
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin, LoginManager, login_user, logout_user, login_required, current_user
 from flask_session import Session
@@ -11,6 +11,7 @@ app = Flask(__name__)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///sharetabi.db'
 app.config["TEMPLATES_AUTO_RELOAD"] = True # Ensure templates are auto-reloaded
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False # SADeprecationWarning: SQLALCHEMY_TRACK_MODIFICATIONS adds significant overhead and will be disabled by default in the future.
 
 db = SQLAlchemy(app)
 
@@ -55,3 +56,30 @@ class Favorite(db.Model):
 @app.route("/", methods=["GET"])
 def top():
     return render_template("top.html")
+
+
+@app.route("/new", methods=["GET", "POST"])
+def new():
+    """post new article"""
+
+    if (request.method == "POST"):
+
+        title = request.form.get("title")
+        date = datetime.datetime.strptime(request.form.get("date"), '%Y-%m-%d')
+        location = request.form.get("location")
+        report = request.form.get("report")
+
+        if not title or not date or not location or not report:
+            return flash('must provide all information', 'warning')
+
+        # db.execute("INSERT INTO people (user_id, name, affiliation, gender, met_date, friendly, active, polite, memo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+            # session["user_id"], name, affiliation, gender, date, friendly, active, polite, memo)
+
+        travel = Travel(title=title, date=date, location=location, report=report)
+        db.session.add(travel)
+        db.session.commit()
+
+        return redirect("/")
+
+    else:
+        return render_template("new.html")
