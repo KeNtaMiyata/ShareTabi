@@ -55,3 +55,31 @@ class Favorite(db.Model):
 @app.route("/", methods=["GET"])
 def top():
     return render_template("top.html")
+
+
+@app.route("/new", methods=["GET", "POST"])
+def new():
+    """post new article"""
+
+    if (request.method == "POST"):
+
+        title = request.form.get("title")
+        date = request.form.get("date")
+        location = request.form.get("location")
+        report = request.form.get("report")
+        created_at = request.form.get("created_at")
+
+        if not title or not date or not location or not report or not created_at:
+            return flash('must provide all information', 'warning')
+
+        # db.execute("INSERT INTO people (user_id, name, affiliation, gender, met_date, friendly, active, polite, memo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+            # session["user_id"], name, affiliation, gender, date, friendly, active, polite, memo)
+
+        travel = Travel(title=title, date=date, location=location, report=report, created_at=created_at)
+        db.session.add(travel)
+        db.session.commit()
+
+        return redirect("/")
+
+    else:
+        return render_template("new.html")
