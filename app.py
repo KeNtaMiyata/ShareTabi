@@ -83,3 +83,28 @@ def new():
 
     else:
         return render_template("new.html")
+
+
+# 投稿一覧を表示するページ
+@app.route("/travels", methods=["GET"])
+def travels():
+    # if (request.method == "GET"):
+    travels = Travel.query.all()
+    return render_template("travels.html", travels=travels)
+
+
+# 個々の投稿を表示するページ
+@app.route("/travels/<int:travel_id>", methods=["GET","POST","DELETE"])
+def travel():
+    if (request.method == "GET"):  # 表示
+
+        pass
+
+    elif (request.method == "PUT"): # 編集
+        pass
+
+    else: # request.method == "DELETE":
+        pass
+
+    return render_template("show_travel.html")
+
