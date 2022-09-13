@@ -20,6 +20,10 @@
     <p>{{ travel.report }}</p>
 
     <!-- ユーザーが投稿者本人だったら、編集ボタンと削除ボタンを表示 -->
-    
+    {% if travel.user_id == user.id %}
+
+
+
+    {% endif %}
 
 {% endblock %}

@@ -94,17 +94,20 @@ def travels():
 
 
 # 個々の投稿を表示するページ
-@app.route("/travels/<int:travel_id>", methods=["GET","POST","DELETE"])
+@app.route("/travels/<int:travel_id>", methods=["GET","POST"])
 def travel(travel_id):
     if (request.method == "GET"):  # 表示
         travel = Travel.query.get(travel_id)
+        return render_template("show_travel.html", user=current_user, travel=travel)
+
+    else: # (request.method == "POST"):  編集
         pass
 
-    elif (request.method == "PUT"): # 編集
+
+
+@app.route("travels/<int:travel_id>/edit", methods=["GET","POST"])
+def travel_edit(travel_id):
+    if (request.method == "GET"):  # 表示
+        travel = Travel.query.get(travel_id)
         pass
-
-    else: # request.method == "DELETE":
-        pass
-
-    return render_template("show_travel.html", travel=travel)
-
+    return render_template("edit_travel.html", travel=travel)
