@@ -165,6 +165,7 @@ def register():
  
 
 @app.route("/new", methods=["GET", "POST"])
+@login_required
 def new():
     """post new article"""
 
@@ -191,6 +192,7 @@ def new():
 
 # 投稿一覧を表示するページ
 @app.route("/travels", methods=["GET"])
+@login_required
 def travels():
     # if (request.method == "GET"):
     travels = Travel.query.all()
@@ -199,6 +201,7 @@ def travels():
 
 # 個々の投稿を表示するページ
 @app.route("/travels/<int:travel_id>", methods=["GET","POST"])
+@login_required
 def travel(travel_id):
     travel = Travel.query.get(travel_id)
     return render_template("show_travel.html", user=current_user, travel=travel)
@@ -206,6 +209,7 @@ def travel(travel_id):
 
 # 編集画面
 @app.route("/travels/<int:travel_id>/edit", methods=["GET","POST"])
+@login_required
 def travel_edit(travel_id):
     if (request.method == "GET"):  # 表示
         travel = Travel.query.get(travel_id)
@@ -216,6 +220,7 @@ def travel_edit(travel_id):
 
 
 # 削除機能
+# @login_required
 # @app.route("/travels/<int:travel_id>/delete", methods=["GET"])
 # def travel_edit(travel_id):
 #     if (request.method == "GET"):  # 表示
