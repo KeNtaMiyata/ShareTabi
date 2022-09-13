@@ -13,15 +13,28 @@
     </head>
 
     <body>
-        <header></header>
-        {% with messages = get_flashed_messages(with_categories=true) %}
+        <header>
+            <nav>
+                <ul>
+                    <li><a href="/">top</a></li>
+                    <li><a href="/new">new</a></li>
+                    <li><a href="/travels">travels</a></li>
+                    <!-- <li><a href="/">top</a></li>
+                    <li><a href="/">top</a></li>
+                    <li><a href="/">top</a></li> -->
+                </ul>
+            </nav>
+            
+         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
                 {% for category, message in messages %}
                     <li class="{{ category }}">{{ message }}</li>
                 {% endfor %}
             {% endif %}
-        {% endwith %}
-
+          {% endwith %}
+          
+        </header>
+        
         <main>
             {% block main %}{% endblock %}
         </main>
