@@ -16,6 +16,7 @@ app.config['SQLALCHEMY_ECHO'] = True # ログ出力
 # シークレットキーの設定。セッション情報を暗号化するための設定。
 app.config['SECRET_KEY'] = os.urandom(24)
 app.config["TEMPLATES_AUTO_RELOAD"] = True # Ensure templates are auto-reloaded
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False # SADeprecationWarning: SQLALCHEMY_TRACK_MODIFICATIONS adds significant overhead and will be disabled by default in the future.
 
 db = SQLAlchemy(app)
 
@@ -71,6 +72,7 @@ def load_user(user_id):
 @app.route("/", methods=["GET"])
 def top():
     return render_template("top.html")
+
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -164,3 +166,29 @@ def register():
     else:
         return render_template("register.html")
  
+
+@app.route("/new", methods=["GET", "POST"])
+def new():
+    """post new article"""
+
+    if (request.method == "POST"):
+
+        title = request.form.get("title")
+        date = datetime.datetime.strptime(request.form.get("date"), '%Y-%m-%d')
+        location = request.form.get("location")
+        report = request.form.get("report")
+
+        if not title or not date or not location or not report:
+            return flash('must provide all information', 'warning')
+
+        # db.execute("INSERT INTO people (user_id, name, affiliation, gender, met_date, friendly, active, polite, memo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+            # session["user_id"], name, affiliation, gender, date, friendly, active, polite, memo)
+
+        travel = Travel(title=title, date=date, location=location, report=report)
+        db.session.add(travel)
+        db.session.commit()
+
+        return redirect("/")
+
+    else:
+        return render_template("new.html")
