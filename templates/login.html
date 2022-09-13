@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    ログイン
+{% endblock %}
+
+{% block main %}
+    <form action="/login" method="post">
+        <input class="form-control mx-auto w-auto" id="username" name="username" placeholder="ユーザー名" type="text">
+        <input class="form-control mx-auto w-auto" id="password" name="password" placeholder="パスワード" type="password">            
+        <button class="btn btn-primary" type="submit">ログイン</button>
+    </form>
+{% endblock %}

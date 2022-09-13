@@ -1,0 +1,11 @@
+.warning
+{
+    color:red;
+    background-color:rgb(255, 145, 150);
+}
+
+.success
+{
+    color:green;
+    background-color: rgb(0,255,0);
+}
