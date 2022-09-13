@@ -205,7 +205,7 @@ def travel(travel_id):
 
 
 # 編集画面
-@app.route("travels/<int:travel_id>/edit", methods=["GET","POST"])
+@app.route("/travels/<int:travel_id>/edit", methods=["GET","POST"])
 def travel_edit(travel_id):
     if (request.method == "GET"):  # 表示
         travel = Travel.query.get(travel_id)
@@ -216,11 +216,10 @@ def travel_edit(travel_id):
 
 
 # 削除機能
-@app.route("travels/<int:travel_id>/delete", methods=["GET"])
-def travel_edit(travel_id):
-    if (request.method == "GET"):  # 表示
-        travel = Travel.query.get(travel_id)
-        pass
+# @app.route("/travels/<int:travel_id>/delete", methods=["GET"])
+# def travel_edit(travel_id):
+#     if (request.method == "GET"):  # 表示
+#         travel = Travel.query.get(travel_id)
+#         pass
 
-    return render_template("edit_travel.html", travel=travel)
 
