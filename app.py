@@ -30,10 +30,9 @@ class User(UserMixin, db.Model):
     password = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(25), nullable=False, unique=True)
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.datetime.now(pytz.timezone('Asia/Tokyo')))
-
-    # 一旦実装しないで置くもの
-    # travels = db.relationship('Travel', backref='user', lazy=True)
-    # profile_image = db.Column(...)
+    travels = db.relationship('Travel', backref='user', lazy=True)
+    comments = db.relationship('Comment', backref='user', lazy=True)
+    favorites = db.relationship('Favorite', backref='user', lazy=True)
 
 
 class Travel(db.Model):
@@ -43,11 +42,10 @@ class Travel(db.Model):
     location = db.Column(db.String(50), nullable=True)
     report = db.Column(db.String(500), nullable=False)
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.datetime.now(pytz.timezone('Asia/Tokyo')))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    comments = db.relationship('Comment', backref='travel', lazy=True)
+    favorites = db.relationship('Favorite', backref='travel', lazy=True)
     
-    # 一旦実装しないで置くもの
-    # user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    # top_picture =db.Column(...) 
-
 
 class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -60,10 +58,9 @@ class Favorite(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     travel_id = db.Column(db.Integer, db.ForeignKey('travel.id'), nullable=False)
+
     
-# @login_requred : ログイン後のみ付けたい機能だけ
-
-
+# @login_required : ログイン後のみ付けたい機能だけ
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
@@ -177,14 +174,12 @@ def new():
         date = datetime.datetime.strptime(request.form.get("date"), '%Y-%m-%d')
         location = request.form.get("location")
         report = request.form.get("report")
+        user_id = current_user.id
 
         if not title or not date or not location or not report:
             return flash('must provide all information', 'warning')
 
-        # db.execute("INSERT INTO people (user_id, name, affiliation, gender, met_date, friendly, active, polite, memo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
-            # session["user_id"], name, affiliation, gender, date, friendly, active, polite, memo)
-
-        travel = Travel(title=title, date=date, location=location, report=report)
+        travel = Travel(title=title, date=date, location=location, report=report, user_id=user_id)
         db.session.add(travel)
         db.session.commit()
 
