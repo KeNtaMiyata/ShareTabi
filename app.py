@@ -71,7 +71,6 @@ def top():
     return render_template("top.html")
 
 
-
 @app.route("/login", methods=["GET", "POST"])
 def login():
     """ユーザログイン"""
@@ -249,4 +248,43 @@ def travel_delete(travel_id):
 # User ごとのページ
 
 
-# 
+# /travels/4/ でコメント送信ボタンを押すとここに来るようにする
+@app.route("/travels/<int:travel_id>/comments", methods=["POST"])
+@login_required
+def comment(travel_id):
+    body = request.form.get("body")
+    comment = Comment(body=body, user_id=current_user.id, travel_id=travel_id)
+    db.session.add(comment)
+    db.session.commit()
+    return redirect(f"travels/{ travel_id }")
+
+
+# コメント削除
+@app.route("/travels/<int:travel_id>/comments/<int:comment_id>/delete", methods=["POST"])
+@login_required
+def comment(travel_id, comment_id):
+    comment = Comment.query.get(comment_id)
+    db.session.delete(comment)
+    db.session.commit()
+    return redirect(f"travels/{ travel_id }")
+
+
+# いいね機能
+@app.route("/travels/<int:travel_id>/favorites", methods=["POST"])
+@login_required
+def favorite(travel_id):
+    favorite=Favorite(user_id=current_user.id, travel_id=travel_id)
+    db.session.add(favorite)
+    db.session.commit()
+    return redirect(f"travels/{ travel_id }")
+
+
+# いいね削除
+@app.route("/travels/<int:travel_id>/favorites/delete", methods=["POST"])
+@login_required
+def favorite_cancel(travel_id):
+    favorite = Favorite.query.filter(Favorite.user_id == current_user.id, Favorite.travel_id == travel_id).one()
+    db.session.delete(favorite)
+    db.session.commit()
+    return redirect(f"travels/{ travel_id }")
+
