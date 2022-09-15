@@ -21,8 +21,8 @@
 
     <!-- ユーザーが投稿者本人だったら、編集ボタンと削除ボタンを表示 -->
     {% if travel.user_id == user.id %}
-
-
+    <p><a href="/travels/{{ travel.id }}/edit">edit</a></p>
+    <p><a href="/travels/{{ travel.id }}/delete">delete</a></p>
 
     {% endif %}
 
