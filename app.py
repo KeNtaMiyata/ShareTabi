@@ -215,16 +215,38 @@ def travel_edit(travel_id):
         travel = Travel.query.get(travel_id)
         return render_template("edit_travel.html", travel=travel)
         
-    else:
-        pass
+    else: # request.method == "POST"
+        travel = Travel.query.get(travel_id)
 
+        title = request.form.get("title")
+        date = datetime.datetime.strptime(request.form.get("date"), '%Y-%m-%d')
+        location = request.form.get("location")
+        report = request.form.get("report")
+        
+        if not title or not date or not location or not report:
+            return flash('must provide all information', 'warning')
+
+        travel.title=title
+        travel.date=date
+        travel.location=location
+        travel.report=report
+
+        db.session.commit()
+
+        return redirect(f"/travels/{{ travel_id }}")  
+  
 
 # 削除機能
-# @login_required
-# @app.route("/travels/<int:travel_id>/delete", methods=["GET"])
-# def travel_edit(travel_id):
-#     if (request.method == "GET"):  # 表示
-#         travel = Travel.query.get(travel_id)
-#         pass
+@login_required
+@app.route("/travels/<int:travel_id>/delete", methods=["GET"])
+def travel_delete(travel_id):
+    travel = Travel.query.get(travel_id)
+    db.session.delete(travel)
+    db.session.commit()
+    return redirect(f"/travels/{{ travel_id }}")  
 
 
+# User ごとのページ
+
+
+# 
