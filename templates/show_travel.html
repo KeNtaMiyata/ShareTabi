@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Travels
+{% endblock %}
+
+{% block main %}
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <li class="{{ category }}">{{ message }}</li>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <p>{{ travel.created_at}}</p>
+    <p>{{ travel.title }}</p>
+    <p>{{ travel.date }}</p>
+    <p>{{ travel.location }}</p>
+    <p>{{ travel.report }}</p>
+
+    <!-- ユーザーが投稿者本人だったら、編集ボタンと削除ボタンを表示 -->
+    {% if travel.user_id == user.id %}
+
+
+
+    {% endif %}
+
+{% endblock %}

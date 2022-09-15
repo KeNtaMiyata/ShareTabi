@@ -1,0 +1,34 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Travels
+{% endblock %}
+
+{% block main %}
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <li class="{{ category }}">{{ message }}</li>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <table>
+        <thead>
+
+        </thead>
+        <tbody>
+            {% for travel in travels %}
+            <tr>
+                <td>{{ travel.created_at}}</td>
+                <td>{{ travel.title }}</td>
+                <td>{{ travel.date }}</td>
+                <td>{{ travel.location }}</td>
+                <td>{{ travel.report }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+
+    </table>
+    
+{% endblock %}
