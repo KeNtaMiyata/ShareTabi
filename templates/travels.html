@@ -20,6 +20,11 @@
         <tbody>
             {% for travel in travels %}
             <tr>
+                <td><a href="https://twitter.com/intent/tweet?text={{ travel.report }}"
+                    hashtags="{{ travel.location }}"
+                    class="twitter-share-button">
+                    ツイート
+                  </a></td>
                 <td>{{ travel.created_at}}</td>
                 <td>{{ travel.title }}</td>
                 <td>{{ travel.date }}</td>

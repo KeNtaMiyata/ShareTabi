@@ -68,6 +68,7 @@ def load_user(user_id):
 
 @app.route("/", methods=["GET"])
 def top():
+    
     return render_template("top.html")
 
 
