@@ -238,15 +238,78 @@ def travel_edit(travel_id):
         travel = Travel.query.get(travel_id)
         return render_template("edit_travel.html", travel=travel)
         
-    else:
-        pass
+    else: # request.method == "POST"
+        travel = Travel.query.get(travel_id)
 
+        title = request.form.get("title")
+        date = datetime.datetime.strptime(request.form.get("date"), '%Y-%m-%d')
+        location = request.form.get("location")
+        report = request.form.get("report")
+        
+        if not title or not date or not location or not report:
+            return flash('must provide all information', 'warning')
+
+        travel.title=title
+        travel.date=date
+        travel.location=location
+        travel.report=report
+
+        db.session.commit()
+
+        return redirect(f"/travels/{{ travel_id }}")  
+  
 
 # 削除機能
-# @login_required
-# @app.route("/travels/<int:travel_id>/delete", methods=["GET"])
-# def travel_edit(travel_id):
-#     if (request.method == "GET"):  # 表示
-#         travel = Travel.query.get(travel_id)
-#         pass
+@login_required
+@app.route("/travels/<int:travel_id>/delete", methods=["GET"])
+def travel_delete(travel_id):
+    travel = Travel.query.get(travel_id)
+    db.session.delete(travel)
+    db.session.commit()
+    return redirect(f"/travels/{{ travel_id }}")  
+
+
+# User ごとのページ
+
+
+# /travels/4/ でコメント送信ボタンを押すとここに来るようにする
+@app.route("/travels/<int:travel_id>/comments", methods=["POST"])
+@login_required
+def comment(travel_id):
+    body = request.form.get("body")
+    comment = Comment(body=body, user_id=current_user.id, travel_id=travel_id)
+    db.session.add(comment)
+    db.session.commit()
+    return redirect(f"travels/{ travel_id }")
+
+
+# コメント削除
+@app.route("/travels/<int:travel_id>/comments/<int:comment_id>/delete", methods=["POST"])
+@login_required
+def comment(travel_id, comment_id):
+    comment = Comment.query.get(comment_id)
+    db.session.delete(comment)
+    db.session.commit()
+    return redirect(f"travels/{ travel_id }")
+
+
+# いいね機能
+@app.route("/travels/<int:travel_id>/favorites", methods=["POST"])
+@login_required
+def favorite(travel_id):
+    favorite=Favorite(user_id=current_user.id, travel_id=travel_id)
+    db.session.add(favorite)
+    db.session.commit()
+    return redirect(f"travels/{ travel_id }")
+
+
+# いいね削除
+@app.route("/travels/<int:travel_id>/favorites/delete", methods=["POST"])
+@login_required
+def favorite_cancel(travel_id):
+    favorite = Favorite.query.filter(Favorite.user_id == current_user.id, Favorite.travel_id == travel_id).one()
+    db.session.delete(favorite)
+    db.session.commit()
+    return redirect(f"travels/{ travel_id }")
+
 
