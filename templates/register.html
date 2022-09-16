@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    新規登録
+{% endblock %}
+
+{% block main %}
+
+        <form action="/register" method="post">
+            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="username" name="username" placeholder="新規ユーザ名" type="text">
+            <input class="form-control mx-auto w-auto" id="email" name="email" placeholder="メールアドレス" type="text">
+            <input class="form-control mx-auto w-auto" id="password" name="password" placeholder="パスワード" type="password">
+            <input class="form-control mx-auto w-auto" id="password" name="confirmation" placeholder="パスワード(もう一度)" type="password">
+            <button class="btn btn-primary" type="submit">登録する</button>
+        </form>
+{% endblock %}
