@@ -51,6 +51,7 @@ class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     body = db.Column(db.String(50), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    user_name = db.Column(db.String(15), nullable=False)
     travel_id = db.Column(db.Integer, db.ForeignKey('travel.id'), nullable=False)
 
 
@@ -182,7 +183,6 @@ def new():
         travel = Travel(title=title, date=date, location=location, report=report, user_id=user_id)
         db.session.add(travel)
         db.session.commit()
-
         return redirect("/")
 
     else:
@@ -203,7 +203,12 @@ def travels():
 @login_required
 def travel_show(travel_id):
     travel = Travel.query.get(travel_id)
-    return render_template("show_travel.html", user=current_user, travel=travel)
+    comments = Comment.query.filter(Comment.travel_id == travel.id)
+    favorites = Favorite.query.filter(Favorite.travel_id == travel.id).all()
+    favorites_count = len(favorites)
+    user_favorite = Favorite.query.filter(Favorite.travel_id == travel.id, Favorite.user_id==current_user.id).all()
+    user_favorite_count =len(user_favorite)
+    return render_template("show_travel.html", user=current_user, travel=travel, comments=comments, favorites_count=favorites_count, user_favorite_count=user_favorite_count)
 
 
 # 編集画面
@@ -229,9 +234,7 @@ def travel_edit(travel_id):
         travel.date=date
         travel.location=location
         travel.report=report
-
         db.session.commit()
-
         return redirect(f"/travels/{{ travel_id }}")  
   
 
@@ -242,7 +245,7 @@ def travel_delete(travel_id):
     travel = Travel.query.get(travel_id)
     db.session.delete(travel)
     db.session.commit()
-    return redirect(f"/travels/{{ travel_id }}")  
+    return redirect(f"/travels/{ travel_id }")  
 
 
 # User全員を表示させるページ
@@ -267,38 +270,36 @@ def user_show(user_id):
 @login_required
 def comment(travel_id):
     body = request.form.get("body")
-    comment = Comment(body=body, user_id=current_user.id, travel_id=travel_id)
+    comment = Comment(body=body, user_id=current_user.id, user_name=current_user.name, travel_id=travel_id)
     db.session.add(comment)
     db.session.commit()
-    return redirect(f"travels/{ travel_id }")
+    return redirect(f"/travels/{ travel_id }")
 
 
 # コメント削除
-@app.route("/travels/<int:travel_id>/comments/<int:comment_id>/delete", methods=["POST"])
+@app.route("/travels/<int:travel_id>/comments/<int:comment_id>/delete", methods=["GET"])
 @login_required
 def comment_delete(travel_id, comment_id):
     comment = Comment.query.get(comment_id)
     db.session.delete(comment)
     db.session.commit()
-    return redirect(f"travels/{ travel_id }")
+    return redirect(f"/travels/{ travel_id }")
 
 
 # いいね機能
-@app.route("/travels/<int:travel_id>/favorites", methods=["POST"])
+@app.route("/travels/<int:travel_id>/favorites", methods=["GET"])
 @login_required
 def favorite(travel_id):
-    favorite=Favorite(user_id=current_user.id, travel_id=travel_id)
-    db.session.add(favorite)
-    db.session.commit()
-    return redirect(f"travels/{ travel_id }")
+    favorite = Favorite.query.filter(Favorite.user_id == current_user.id, Favorite.travel_id == travel_id).all()
+    print(favorite)
+    if len(favorite) == 0:
+        favorite=Favorite(user_id=current_user.id, travel_id=travel_id)
+        db.session.add(favorite)
+        db.session.commit()
 
+    else:
+        favorite = Favorite.query.filter(Favorite.user_id==current_user.id, Favorite.travel_id==travel_id).first()
+        db.session.delete(favorite)
+        db.session.commit()
 
-# いいね削除
-@app.route("/travels/<int:travel_id>/favorites/delete", methods=["POST"])
-@login_required
-def favorite_cancel(travel_id):
-    favorite = Favorite.query.filter(Favorite.user_id == current_user.id, Favorite.travel_id == travel_id).one()
-    db.session.delete(favorite)
-    db.session.commit()
-    return redirect(f"travels/{ travel_id }")
-
+    return redirect(f"/travels/{ travel_id }")

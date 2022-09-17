@@ -19,11 +19,47 @@
     <p>{{ travel.location }}</p>
     <p>{{ travel.report }}</p>
 
+    <div>
+        <table>
+            <thead>
+    
+            </thead>
+            <tbody>
+                {% for comment in comments %}
+                <tr>
+                    <td><a href="/users/{{ comment.user_id }}">{{ comment.user_name }}</a></td>
+                    <td>{{ comment.body }}</td>
+                    
+                    <!-- ユーザーがコメント本人だったら、削除ボタンを表示 -->
+                    {% if comment.user_id == user.id %}
+                    <td>
+                        <a href="/travels/{{ travel.id }}/comments/{{ comment.id }}/delete">コメント削除</a>
+                    </td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+
+    <!-- コメント -->
+    <form action="/travels/{{ travel.id }}/comments" method="post">
+        <textarea class="form-control mx-auto w-auto" name="body" type="text" rows="3"></textarea>
+        <button class="form-control mx-auto w-auto" type="submit">コメントを投稿する</button>
+    </form>
+
+    <!-- いいね -->
+    {% if user_favorite_count == 0 %}
+    <a href="/travels/{{ travel.id }}/favorites">♡{{ favorites_count }}</a>
+    {% else %}
+    <a href="/travels/{{ travel.id }}/favorites">♡いいね済み{{ favorites_count }}</a>
+    {% endif %}
+
     <!-- ユーザーが投稿者本人だったら、編集ボタンと削除ボタンを表示 -->
     {% if travel.user_id == user.id %}
     <p><a href="/travels/{{ travel.id }}/edit">edit</a></p>
     <p><a href="/travels/{{ travel.id }}/delete">delete</a></p>
-
     {% endif %}
 
 {% endblock %}
