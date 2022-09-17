@@ -13,6 +13,10 @@
         {% endif %}
     {% endwith %}
 
+    <ul>
+        <li><a href="https://www.rakuten.co.jp/category/" target="_blank">楽天市場で調べる</a>
+    </ul>
+
     <table>
         <thead>
 
@@ -20,9 +24,11 @@
         <tbody>
             {% for travel in travels %}
             <tr>
-                <td><a href="https://twitter.com/intent/tweet?text={{ travel.report }}"
-                    hashtags="{{ travel.location }}"
-                    class="twitter-share-button">
+                <td><a href="http://twitter.com/share"
+                    class="twitter-share-button"
+                    data-text="{{ travel.report }}"
+                    data-count="horizotal"
+                    >
                     ツイート
                   </a></td>
                 <td>{{ travel.created_at}}</td>
