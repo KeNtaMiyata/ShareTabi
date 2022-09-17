@@ -1,17 +1,13 @@
 {% extends "layout.html" %}
 
 {% block title %}
-    Travels
+    Show_user
 {% endblock %}
 
 {% block main %}
-    {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-            {% for category, message in messages %}
-                <li class="{{ category }}">{{ message }}</li>
-            {% endfor %}
-        {% endif %}
-    {% endwith %}
+
+    <p>{{ user.name }}</p>
+    <p>{{ user.created_at}}</p>
 
     <table>
         <thead>
@@ -30,5 +26,5 @@
             {% endfor %}
         </tbody>
     </table>
-    
+
 {% endblock %}
