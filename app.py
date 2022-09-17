@@ -201,7 +201,7 @@ def travels():
 # 個々の投稿を表示するページ
 @app.route("/travels/<int:travel_id>", methods=["GET","POST"])
 @login_required
-def travel(travel_id):
+def travel_show(travel_id):
     travel = Travel.query.get(travel_id)
     return render_template("show_travel.html", user=current_user, travel=travel)
 
@@ -245,7 +245,21 @@ def travel_delete(travel_id):
     return redirect(f"/travels/{{ travel_id }}")  
 
 
-# User ごとのページ
+# User全員を表示させるページ
+@login_required
+@app.route("/users", methods=["GET"])
+def users():
+    users = User.query.all()
+    return render_template("users.html", users=users)
+
+
+# Userごとのページ
+@login_required
+@app.route("/users/<int:user_id>", methods=["GET"])
+def user_show(user_id):
+    user = User.query.get(user_id)
+    travels = Travel.query.filter(Travel.user_id == user.id)
+    return render_template("show_user.html", user=user, travels=travels)
 
 
 # /travels/4/ でコメント送信ボタンを押すとここに来るようにする
@@ -262,7 +276,7 @@ def comment(travel_id):
 # コメント削除
 @app.route("/travels/<int:travel_id>/comments/<int:comment_id>/delete", methods=["POST"])
 @login_required
-def comment(travel_id, comment_id):
+def comment_delete(travel_id, comment_id):
     comment = Comment.query.get(comment_id)
     db.session.delete(comment)
     db.session.commit()
