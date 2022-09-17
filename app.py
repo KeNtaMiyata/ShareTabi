@@ -9,7 +9,7 @@ import os
 import pytz
 
 # アップロードされる拡張子の制限
-ALLOWED_EXTENSIONS = set(['png', 'jpg', 'gif'])
+ALLOWED_EXTENSIONS = set(['png', 'jpg'])
 
 app = Flask(__name__)
 
@@ -203,8 +203,8 @@ def new():
      
         # 画像保存
         if file and allowed_file(file.filename):                
-            new_filename = f'{ current_user.id }_{ travel.id }_{ title }.{file.filename[-3:]}'
-            path = os.path.join('./static/images', new_filename)
+            new_filename = f'{ current_user.id }_{ travel.id }.{file.filename[-3:]}'
+            path = os.path.join('./static/images/post', new_filename)
             file.save(path)
 
         return redirect(f"/travels/{ travel.id }")
@@ -304,7 +304,7 @@ def favorite(travel_id):
 
 
 # いいね削除
-@app.route("/travels/<int:travel_id>/favorites/delete", methods=["POST"])
+@app.route("/travels/<int:travel_id>/favorites/delete", methods=["GET"])
 @login_required
 def favorite_cancel(travel_id):
     favorite = Favorite.query.filter(Favorite.user_id == current_user.id, Favorite.travel_id == travel_id).one()
