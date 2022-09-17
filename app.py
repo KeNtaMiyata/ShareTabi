@@ -276,7 +276,7 @@ def comment(travel_id):
 # コメント削除
 @app.route("/travels/<int:travel_id>/comments/<int:comment_id>/delete", methods=["POST"])
 @login_required
-def comment(travel_id, comment_id):
+def comment_delete(travel_id, comment_id):
     comment = Comment.query.get(comment_id)
     db.session.delete(comment)
     db.session.commit()
