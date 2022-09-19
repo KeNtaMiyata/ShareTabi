@@ -205,7 +205,7 @@ def new():
      
         # 画像保存
         if file and allowed_file(file.filename):                
-            new_filename = f'{ current_user.id }_{ travel.id }.{file.filename[-3:]}'
+            new_filename = f'{ current_user.id }_{ travel.id }.png' # 強制敵にpng
             path = os.path.join('./static/images/post', new_filename)
             file.save(path)
 
