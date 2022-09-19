@@ -1,3 +1,4 @@
+from importlib.resources import path
 from flask import Flask, flash, redirect, render_template, request, session
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin, LoginManager, login_user, logout_user, login_required, current_user
@@ -6,6 +7,9 @@ from werkzeug.security import check_password_hash, generate_password_hash
 import datetime
 import os
 import pytz
+
+# アップロードされる拡張子の制限
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'gif'])
 
 app = Flask(__name__)
 
@@ -22,6 +26,7 @@ db = SQLAlchemy(app)
 
 login_manager = LoginManager()
 login_manager.init_app(app)
+
 
 # models
 class User(UserMixin, db.Model):
@@ -60,6 +65,16 @@ class Favorite(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     travel_id = db.Column(db.Integer, db.ForeignKey('travel.id'), nullable=False)
 
+
+# 画像について
+def allowed_file(filename):
+    # .があるかどうかのチェックと、拡張子の確認
+    # OKなら１、だめなら0
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
+
+# 以下ルーティングとアクション
     
 # @login_required : ログイン後のみ付けたい機能だけ
 @login_manager.user_loader
@@ -177,13 +192,25 @@ def new():
         report = request.form.get("report")
         user_id = current_user.id
 
-        if not title or not date or not location or not report:
+        # 画像投稿
+        file = request.files['image']
+
+        if not title or not date or not location or not report or not file:
             return flash('must provide all information', 'warning')
 
         travel = Travel(title=title, date=date, location=location, report=report, user_id=user_id)
         db.session.add(travel)
         db.session.commit()
-        return redirect("/")
+
+     
+        # 画像保存
+        if file and allowed_file(file.filename):                
+            new_filename = f'{ current_user.id }_{ travel.id }.png' # 強制敵にpng
+            path = os.path.join('./static/images/post', new_filename)
+            file.save(path)
+
+        return redirect(f"/travels/{ travel.id }")
+
 
     else:
         return render_template("new.html")
