@@ -20,6 +20,13 @@
         <tbody>
             {% for travel in travels %}
             <tr>
+                <td><a href="http://twitter.com/share"
+                    class="twitter-share-button"
+                    data-text="{{ travel.report }}"
+                    data-count="horizotal"
+                    >
+                    ツイート
+                  </a>
                 </td>
                 <td>{{ travel.created_at}}</td>
                 <td>{{ travel.title }}</td>
