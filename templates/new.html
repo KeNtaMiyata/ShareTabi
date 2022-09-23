@@ -5,20 +5,12 @@
 {% endblock %}
 
 {% block main %}
-    {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-                {% for category, message in messages %}
-                    <li class="{{ category }}">{{ message }}</li>
-                {% endfor %}
-            {% endif %}
-        {% endwith %}
-
-        <form action="/new" method="post" enctype = "multipart/form-data">
-            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="title" name="title" placeholder="タイトル" type="text">
-            <input class="form-control mx-auto w-auto" id="date" name="date" type="date">
-            <input class="form-control mx-auto w-auto" id="location" name="location" placeholder="場所" type="text">
-            <input class="form-control mx-auto w-auto" id="report" name="report" placeholder="レポート" type="text">
-            <input class="form-control mx-auto w-auto" id="image" name="image" type="file">
-            <button class="form-control mx-auto w-auto" type="submit">投稿する</button>
-        </form>
+    <form action="/new" method="post" enctype = "multipart/form-data">
+        <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="title" name="title" placeholder="タイトル" type="text">
+        <input class="form-control mx-auto w-auto" id="date" name="date" type="date">
+        <input class="form-control mx-auto w-auto" id="location" name="location" placeholder="場所" type="text">
+        <input class="form-control mx-auto w-auto" id="report" name="report" placeholder="レポート" type="text">
+        <input class="form-control mx-auto w-auto" id="image" name="image" type="file">
+        <button class="form-control mx-auto w-auto" type="submit">投稿する</button>
+    </form>
 {% endblock %}
