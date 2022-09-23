@@ -58,17 +58,23 @@
 1. 投稿機能
 1. コメント機能
 1. いいね機能
+
+
+#### (9/11~9/17)
 1. 
 1. ...
 
+#### (9/18~9/24)
+
+
+
+#### (9/25~9/30)
+
+---
+
 ## 開発者
 
-Honoka Miki
-その他3名
-
-1854 miyata
-
-1917 miyata2
-
-1940 tanaka
-
+- Yoshiho Tanaka
+- Yuto Tsujitsuka 
+- Honoka Miki
+- Kenta Miyata
