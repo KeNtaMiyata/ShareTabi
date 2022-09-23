@@ -73,8 +73,15 @@ def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
-
 # 以下ルーティングとアクション
+
+# errorのとき
+# unauthorized error のときトップページに戻る
+@app.errorhandler(401)
+def unauthorized(error):
+    flash('ログインをしてください', 'warning')
+    return render_template("login.html")
+
     
 # @login_required : ログイン後のみ付けたい機能だけ
 @login_manager.user_loader
