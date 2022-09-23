@@ -217,12 +217,17 @@ def new():
 
 
 # 投稿一覧を表示するページ
-@app.route("/travels", methods=["GET"])
+@app.route("/travels", methods=["GET", "POST"])
 @login_required
 def travels():
-    # if (request.method == "GET"):
     travels = Travel.query.all()
-    return render_template("travels.html", travels=travels)
+    if (request.method == "GET"):
+        search = ""
+    
+    else: # request.method == "POST"
+        search = request.form["search"]
+
+    return render_template("travels.html", travels=travels, search=search)
 
 
 # 個々の投稿を表示するページ
