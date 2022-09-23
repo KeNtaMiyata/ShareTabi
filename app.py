@@ -230,12 +230,13 @@ def travels():
 @login_required
 def travel_show(travel_id):
     travel = Travel.query.get(travel_id)
-    comments = Comment.query.filter(Comment.travel_id == travel.id)
+    travel_user = User.query.get(travel.user_id)
+    comments = Comment.query.filter(Comment.travel_id == travel_id)
     favorites = Favorite.query.filter(Favorite.travel_id == travel.id).all()
     favorites_count = len(favorites)
     user_favorite = Favorite.query.filter(Favorite.travel_id == travel.id, Favorite.user_id==current_user.id).all()
     user_favorite_count =len(user_favorite)
-    return render_template("show_travel.html", user=current_user, travel=travel, comments=comments, favorites_count=favorites_count, user_favorite_count=user_favorite_count)
+    return render_template("show_travel.html", current_user=current_user, travel=travel, travel_user=travel_user, comments=comments, favorites_count=favorites_count, user_favorite_count=user_favorite_count)
 
 
 # 編集画面
@@ -262,7 +263,7 @@ def travel_edit(travel_id):
         travel.location=location
         travel.report=report
         db.session.commit()
-        return redirect(f"/travels/{{ travel_id }}")  
+        return redirect(f"/travels/{ travel_id }")  
   
 
 # 削除機能
@@ -270,9 +271,15 @@ def travel_edit(travel_id):
 @app.route("/travels/<int:travel_id>/delete", methods=["GET"])
 def travel_delete(travel_id):
     travel = Travel.query.get(travel_id)
+    comments = Comment.query.filter(Comment.travel_id==travel_id).all()
+    favorites = Favorite.query.filter(Comment.travel_id==travel_id).all()
+    for comment in comments:
+        db.session.delete(comment)
+    for favorite in favorites:
+        db.session.delete(favorite)
     db.session.delete(travel)
     db.session.commit()
-    return redirect(f"/travels/{ travel_id }")  
+    return redirect("/travels")  
 
 
 # User全員を表示させるページ
