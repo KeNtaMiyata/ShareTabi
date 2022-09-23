@@ -11,10 +11,13 @@
             <input class="form-control mx-auto w-auto" id="email" name="email" placeholder="メールアドレス" type="text">
             <input class="form-control mx-auto w-auto" id="password" name="password" placeholder="パスワード" type="password">
             <input class="form-control mx-auto w-auto" id="password" name="confirmation" placeholder="パスワード(もう一度)" type="password">
-            <select class="imgSel" id="sel1" onChange="selectChange('sel1')">
-                <option value="static/icon/ゾウ.png">ゾウ</option>
-                <option value="static/icon/トナカイ.png">トナカイ</option>
-            </select>
+            <div autocomplete="off" autofocus class="form-control mx-auto w-auto">
+                <select class="imgSel" id="sel1" onChange="selectChange('sel1')">
+                    <option value="">アイコンを選択</option>
+                    <option value="static/icon/ゾウ.png">ゾウ</option>
+                    <option value="static/icon/トナカイ.png">トナカイ</option>
+                </select>
+            </div>
             <button class="btn btn-primary" type="submit">登録する</button>
         </form>
 {% endblock %}
