@@ -13,22 +13,29 @@
         {% endif %}
     {% endwith %}
 
-    <table>
-        <thead>
+    <body>
+        <div class="contaner">
+            <div class="body">
+                {% for travel in travels %}
+                <tr>
+                    <td>{{ travel.created_at}}</td>
+                    <td>{{ travel.title }}</td>
+                    <td>{{ travel.date }}</td>
+                    <td>{{ travel.location }}</td>
+                    <td>{{ travel.report }}</td>
+                    <br>
+                </tr>
+                {% endfor %}
+            </div>
+            <div class="sidebar">
+                <p>いいねランキング</p>
+                <ul>
+                <li>第１位{{ no1.title }}</li>
+                <li>第２位{{ no2.title }}</li>
+                <li>第３位{{ no3.title }}</li>
+                </ul>
+            </div>
+        </div>
+    <body>
 
-        </thead>
-        <tbody>
-            {% for travel in travels %}
-            <tr>
-                <td>{{ travel.created_at}}</td>
-                <td>{{ travel.title }}</td>
-                <td>{{ travel.date }}</td>
-                <td>{{ travel.location }}</td>
-                <td>{{ travel.report }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-
-    </table>
-    
 {% endblock %}

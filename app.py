@@ -196,7 +196,10 @@ def new():
 def travels():
     # if (request.method == "GET"):
     travels = Travel.query.all()
-    return render_template("travels.html", travels=travels)
+    no1 = db.execute("SELECT s* FROM(SELECT *, RANK() OVER(ORDER BY favorites DESC) AS rank_result FROM travels) AS s WHERE s.rank_result = 1")
+    no2 = db.execute("SELECT s* FROM(SELECT *, RANK() OVER(ORDER BY favorites DESC) AS rank_result FROM travels) AS s WHERE s.rank_result = 2")
+    no3 = db.execute("SELECT s* FROM(SELECT *, RANK() OVER(ORDER BY favorites DESC) AS rank_result FROM travels) AS s WHERE s.rank_result = 3")
+    return render_template("travels.html", travels=travels, no1=no1, no2=no2, no3=no3)
 
 
 # 個々の投稿を表示するページ
