@@ -277,8 +277,11 @@ def travel_delete(travel_id):
         db.session.delete(comment)
     for favorite in favorites:
         db.session.delete(favorite)
+    os.remove(f"./static/images/post/{ travel.user_id }_{ travel.id }.png")
     db.session.delete(travel)
     db.session.commit()
+
+    # 画像削除
     return redirect("/travels")  
 
 
