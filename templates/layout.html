@@ -39,7 +39,37 @@
                     {% endfor %}
                 {% endif %}
             {% endwith %}
-          
+            
+            <!-- <div id="sidebar">
+                <div id="sidebarWrap">
+                    <h1><img src="../static/images/logo/logo.png" width="87" height="25" alt="logo"></h1>
+                    <nav id="mainnav">
+                        <p id="menuWrap"><a id="menu"><span id="menuBtn"></span></a></p>
+                        <div class="panel">
+                            <ul>
+                                <li><a href="/">TOP</a></li>
+                                {% if current_user.is_authenticated %}
+                                <li><a href="/travels">みんなのTabiを見る</a></li>
+                                <li><a href="/users">Tabi 人 を探す</a></li>
+                                <li><a href="/new">Tabi を投稿する</a></li>
+                                <li><a href="/logout">LOGOUT</a></li>
+                                {% else %}
+                                <li><a href="/register">SIGNUP</a></li>
+                                <li><a href="/login">LOGIN</a></li>
+                                {% endif %}
+                                <li><a href="">ABOUT US</a></li>
+                            </ul>
+                            <ul id="sns">
+                                <li><a href="#" target="_blank"><img src="images/iconFb.png" width="20" height="20" alt="FB"></a></li>
+                                <li><a href="#" target="_blank"><img src="images/iconTw.png" width="20" height="20" alt="twitter"></a></li>
+                                <li><a href="#" target="_blank"><img src="images/iconInsta.png" width="20" height="20" alt="Instagram"></a></li>
+                                <li><a href="#" target="_blank"><img src="images/iconYouTube.png" width="20" height="20" alt="You Tube"></a></li>
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
+            </div> -->
+
             {% block main %}{% endblock %}
         </main>
         <footer></footer>

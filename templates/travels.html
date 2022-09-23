@@ -5,7 +5,39 @@
 {% endblock %}
 
 {% block main %}
-    <table>
+    <div class="row">
+        {% for travel in travels %}
+            <div class="col-3 mt-1">
+                <a href="/travels/{{ travel.id }}">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <img src="../static/images/post/{{ travel.user_id }}_{{ travel.id }}.png" width="200" height="200"><br>
+                            </tr>
+                            <tr>
+                                <td>{{ travel.date }}</td>
+                                <td>{{ travel.location }}</td>
+                            </tr>
+                            <tr>
+                                <td>{{ travel.title }}</td>
+                                <td>
+                                    <a href="http://twitter.com/share" 
+                                    class="twitter-share-button"
+                                    data-text="{{ travel.report }}"
+                                    data-count="horizotal">
+                                    ツイート
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+
+
+    <!-- <table>
         <thead>
 
         </thead>
@@ -32,6 +64,5 @@
             </tr>
             {% endfor %}
         </tbody>
-    </table>
-    
+    </table> -->
 {% endblock %}
