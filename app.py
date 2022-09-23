@@ -1,3 +1,4 @@
+from importlib.resources import path
 from flask import Flask, flash, redirect, render_template, request, session
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin, LoginManager, login_user, logout_user, login_required, current_user
@@ -6,6 +7,9 @@ from werkzeug.security import check_password_hash, generate_password_hash
 import datetime
 import os
 import pytz
+
+# アップロードされる拡張子の制限
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'gif'])
 
 app = Flask(__name__)
 
@@ -22,6 +26,7 @@ db = SQLAlchemy(app)
 
 login_manager = LoginManager()
 login_manager.init_app(app)
+
 
 # models
 class User(UserMixin, db.Model):
@@ -51,6 +56,7 @@ class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     body = db.Column(db.String(50), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    user_name = db.Column(db.String(15), nullable=False)
     travel_id = db.Column(db.Integer, db.ForeignKey('travel.id'), nullable=False)
 
 
@@ -59,6 +65,16 @@ class Favorite(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     travel_id = db.Column(db.Integer, db.ForeignKey('travel.id'), nullable=False)
 
+
+# 画像について
+def allowed_file(filename):
+    # .があるかどうかのチェックと、拡張子の確認
+    # OKなら１、だめなら0
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
+
+# 以下ルーティングとアクション
     
 # @login_required : ログイン後のみ付けたい機能だけ
 @login_manager.user_loader
@@ -69,7 +85,6 @@ def load_user(user_id):
 @app.route("/", methods=["GET"])
 def top():
     return render_template("top.html")
-
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -177,14 +192,25 @@ def new():
         report = request.form.get("report")
         user_id = current_user.id
 
-        if not title or not date or not location or not report:
+        # 画像投稿
+        file = request.files['image']
+
+        if not title or not date or not location or not report or not file:
             return flash('must provide all information', 'warning')
 
         travel = Travel(title=title, date=date, location=location, report=report, user_id=user_id)
         db.session.add(travel)
         db.session.commit()
 
-        return redirect("/")
+     
+        # 画像保存
+        if file and allowed_file(file.filename):                
+            new_filename = f'{ current_user.id }_{ travel.id }.png' # 強制敵にpng
+            path = os.path.join('./static/images/post', new_filename)
+            file.save(path)
+
+        return redirect(f"/travels/{ travel.id }")
+
 
     else:
         return render_template("new.html")
@@ -205,9 +231,15 @@ def travels():
 # 個々の投稿を表示するページ
 @app.route("/travels/<int:travel_id>", methods=["GET","POST"])
 @login_required
-def travel(travel_id):
+def travel_show(travel_id):
     travel = Travel.query.get(travel_id)
-    return render_template("show_travel.html", user=current_user, travel=travel)
+    travel_user = User.query.get(travel.user_id)
+    comments = Comment.query.filter(Comment.travel_id == travel_id)
+    favorites = Favorite.query.filter(Favorite.travel_id == travel.id).all()
+    favorites_count = len(favorites)
+    user_favorite = Favorite.query.filter(Favorite.travel_id == travel.id, Favorite.user_id==current_user.id).all()
+    user_favorite_count =len(user_favorite)
+    return render_template("show_travel.html", current_user=current_user, travel=travel, travel_user=travel_user, comments=comments, favorites_count=favorites_count, user_favorite_count=user_favorite_count)
 
 
 # 編集画面
@@ -218,16 +250,96 @@ def travel_edit(travel_id):
         travel = Travel.query.get(travel_id)
         return render_template("edit_travel.html", travel=travel)
         
-    else:
-        pass
+    else: # request.method == "POST"
+        travel = Travel.query.get(travel_id)
 
+        title = request.form.get("title")
+        date = datetime.datetime.strptime(request.form.get("date"), '%Y-%m-%d')
+        location = request.form.get("location")
+        report = request.form.get("report")
+        
+        if not title or not date or not location or not report:
+            return flash('must provide all information', 'warning')
+
+        travel.title=title
+        travel.date=date
+        travel.location=location
+        travel.report=report
+        db.session.commit()
+        return redirect(f"/travels/{ travel_id }")  
+  
 
 # 削除機能
-# @login_required
-# @app.route("/travels/<int:travel_id>/delete", methods=["GET"])
-# def travel_edit(travel_id):
-#     if (request.method == "GET"):  # 表示
-#         travel = Travel.query.get(travel_id)
-#         pass
+@login_required
+@app.route("/travels/<int:travel_id>/delete", methods=["GET"])
+def travel_delete(travel_id):
+    travel = Travel.query.get(travel_id)
+    comments = Comment.query.filter(Comment.travel_id==travel_id).all()
+    favorites = Favorite.query.filter(Comment.travel_id==travel_id).all()
+    for comment in comments:
+        db.session.delete(comment)
+    for favorite in favorites:
+        db.session.delete(favorite)
+    os.remove(f"./static/images/post/{ travel.user_id }_{ travel.id }.png")
+    db.session.delete(travel)
+    db.session.commit()
+
+    # 画像削除
+    return redirect("/travels")  
 
 
+# User全員を表示させるページ
+@login_required
+@app.route("/users", methods=["GET"])
+def users():
+    users = User.query.all()
+    return render_template("users.html", users=users)
+
+
+# Userごとのページ
+@login_required
+@app.route("/users/<int:user_id>", methods=["GET"])
+def user_show(user_id):
+    user = User.query.get(user_id)
+    travels = Travel.query.filter(Travel.user_id == user.id)
+    return render_template("show_user.html", user=user, travels=travels)
+
+
+# /travels/4/ でコメント送信ボタンを押すとここに来るようにする
+@app.route("/travels/<int:travel_id>/comments", methods=["POST"])
+@login_required
+def comment(travel_id):
+    body = request.form.get("body")
+    comment = Comment(body=body, user_id=current_user.id, user_name=current_user.name, travel_id=travel_id)
+    db.session.add(comment)
+    db.session.commit()
+    return redirect(f"/travels/{ travel_id }")
+
+
+# コメント削除
+@app.route("/travels/<int:travel_id>/comments/<int:comment_id>/delete", methods=["GET"])
+@login_required
+def comment_delete(travel_id, comment_id):
+    comment = Comment.query.get(comment_id)
+    db.session.delete(comment)
+    db.session.commit()
+    return redirect(f"/travels/{ travel_id }")
+
+
+# いいね機能
+@app.route("/travels/<int:travel_id>/favorites", methods=["GET"])
+@login_required
+def favorite(travel_id):
+    favorite = Favorite.query.filter(Favorite.user_id == current_user.id, Favorite.travel_id == travel_id).all()
+    print(favorite)
+    if len(favorite) == 0:
+        favorite=Favorite(user_id=current_user.id, travel_id=travel_id)
+        db.session.add(favorite)
+        db.session.commit()
+
+    else:
+        favorite = Favorite.query.filter(Favorite.user_id==current_user.id, Favorite.travel_id==travel_id).first()
+        db.session.delete(favorite)
+        db.session.commit()
+
+    return redirect(f"/travels/{ travel_id }")
