@@ -292,10 +292,16 @@ def travel_delete(travel_id):
 
 # User全員を表示させるページ
 @login_required
-@app.route("/users", methods=["GET"])
+@app.route("/users", methods=["GET", "POST"])
 def users():
     users = User.query.all()
-    return render_template("users.html", users=users)
+    if (request.method == "GET"):
+        search = ""
+    
+    else: # request.method == "POST"
+        search = request.form["search"]
+
+    return render_template("users.html", users=users, search=search)
 
 
 # Userごとのページ

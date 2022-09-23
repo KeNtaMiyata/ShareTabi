@@ -24,30 +24,30 @@
         </thead>
         <tbody>
             {% for travel in travels %}
-            {% if search == "" 
-            or search in travel.title 
-            or search in travel.report 
-            or search in travel.location %}
-            <tr>
-                <td><a href="http://twitter.com/share"
-                    class="twitter-share-button"
-                    data-text="{{ travel.report }}"
-                    data-count="horizotal"
-                    >
-                    ツイート
-                  </a>
-                </td>
-                <td>{{ travel.created_at}}</td>
-                <td>{{ travel.title }}</td>
-                <td>{{ travel.date }}</td>
-                <td>{{ travel.location }}</td>
-                <td>{{ travel.report }}</td>
-                <td><a href="/travels/{{ travel.id }}">link</a></td>
-                <td>
-                    <img src="../static/images/post/{{ travel.user_id }}_{{ travel.id }}.png" width="100" height="100"><br>
-                </td>
-            </tr>
-            {% endif %}
+                {% if search == "" 
+                or search in travel.title 
+                or search in travel.report 
+                or search in travel.location %}
+                    <tr>
+                        <td><a href="http://twitter.com/share"
+                            class="twitter-share-button"
+                            data-text="{{ travel.report }}"
+                            data-count="horizotal"
+                            >
+                            ツイート
+                        </a>
+                        </td>
+                        <td>{{ travel.created_at}}</td>
+                        <td>{{ travel.title }}</td>
+                        <td>{{ travel.date }}</td>
+                        <td>{{ travel.location }}</td>
+                        <td>{{ travel.report }}</td>
+                        <td><a href="/travels/{{ travel.id }}">link</a></td>
+                        <td>
+                            <img src="../static/images/post/{{ travel.user_id }}_{{ travel.id }}.png" width="100" height="100"><br>
+                        </td>
+                    </tr>
+                {% endif %}
             {% endfor %}
         </tbody>
     </table>
