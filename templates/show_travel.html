@@ -52,7 +52,6 @@
     <a href="/travels/{{ travel.id }}/favorites">♡いいね済み{{ favorites_count }}</a>
     {% endif %}
 
-
     <!-- ユーザーが投稿者本人だったら、編集ボタンと削除ボタンを表示 -->
     {% if travel.user_id == current_user.id %}
     <p><a href="/travels/{{ travel.id }}/edit">edit</a></p>

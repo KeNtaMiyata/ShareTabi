@@ -27,7 +27,6 @@ caption,th{text-align:left;}
 q:before,q:after{content:'';}
 object,embed{vertical-align:top;}
 legend{display:none;}
-h1,h2,h3,h4,h5,h6{font-size:100%;}
 img,abbr,acronym,fieldset{border:0;}
 
 body{
@@ -66,6 +65,16 @@ a:active, a:focus,input:active, input:focus{outline:0;}
 	padding: 50px 10px 50px 0;
 	text-align: center;
 	font-size: 12px;
+}
+
+
+
+.top{
+    background-image: url(../images/top/world.jpg);
+    background-size: cover;
+    background-position: center;
+	height: 500px;
+    padding: 0;
 }
 
 

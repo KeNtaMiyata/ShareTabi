@@ -142,7 +142,6 @@ def register():
         
         # 空欄チェック
         if not username:
-
             flash('ユーザー名を入力してください', 'warning')
             return render_template("register.html")
         
