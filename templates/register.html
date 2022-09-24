@@ -11,22 +11,18 @@
             <input class="form-control mx-auto w-auto" id="email" name="email" placeholder="メールアドレス" type="text">
             <input class="form-control mx-auto w-auto" id="password" name="password" placeholder="パスワード" type="password">
             <input class="form-control mx-auto w-auto" id="password" name="confirmation" placeholder="パスワード(もう一度)" type="password">
-            <!-- <div autocomplete="off" autofocus class="form-control mx-auto w-auto">
-                <select class="imgSel" id="sel1" onChange="selectChange('sel1')">
-                    <option value="">アイコンを選択</option>
-                    <option value="static/icon/ゾウ.png">ゾウ</option>
-                    <option value="static/icon/トナカイ.png">トナカイ</option>
-                </select>
-            </div> -->
+            
             <div class="select-icon">
                 アイコンを選択してください<br>
                 <input type="radio" name="icon" value="1">
-                <img src="static/icon/usagi.png" class="icon" />
+                <img src="static/icon/1.png" class="icon" />
                 <input type="radio" name="icon" value="2">
-                <img src="static/icon/neko.png" class="icon" />
+                <img src="static/icon/2.png" class="icon" />
                 <input type="radio" name="icon" value="3">
-                <img src="static/icon/inu.png" class="icon" />
+                <img src="static/icon/3.png" class="icon" />
+                <input type="radio" name="icon" value="4">
+                <img src="static/icon/4.png" class="icon" />
             </div>
-            <button class="btn btn-primary" type="submit">登録する</button>
+            <button class="form-control mx-auto w-auto" type="submit">登録する</button>
         </form>
 {% endblock %}

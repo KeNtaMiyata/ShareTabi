@@ -10,29 +10,6 @@
     background-color: rgb(0,255,0);
 }
 
-<<<<<<< HEAD
-.select-icon
-{
-    margin-right: auto;
-    margin-left: auto;
-}
-  
-.icon
-=======
-select.imgSel
-{
-    background-repeat: no-repeat;
-    background-position: 2px 0; /* 背景画像を若干右に移動 */
-    padding-left: 60px; /* 画像.width + α background-position */
-    height: 32px; /* 画像.height + 2 (borderの分を足す) */
-    font-size: 22px;  /* 画像.height - 3 */
-}
-
-_::-webkit-full-page-media, _:future, select.imgSel {
-    -webkit-appearance: button;
-    appearance: button;
-}
-
 .container
 {
     display: flex;
@@ -56,24 +33,17 @@ _::-webkit-full-page-media, _:future, select.imgSel {
 }
 
 .travel_icon
->>>>>>> main
 {
     border-radius: 50%;
     width: 80px;
     height: 80px;
-<<<<<<< HEAD
-    border: 3px solid #999;
-    padding: 3px;
-=======
     border: 3px solid #fff;
     display: inline-block;
->>>>>>> main
 }
 
 .select-icon
 {
-    margin-right: auto;
-    margin-left: auto;
+    text-align:center;
 }
   
 .icon
@@ -82,5 +52,4 @@ _::-webkit-full-page-media, _:future, select.imgSel {
     width: 80px;
     height: 80px;
     border: 3px solid #999;
-    padding: 3px;
 }

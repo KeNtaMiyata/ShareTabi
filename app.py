@@ -134,7 +134,7 @@ def register():
         password = request.form.get('password')
         confirmation = request.form.get('confirmation')
         email = request.form.get('email')
-        icon = request.form.get('icon')
+        icon = int(request.form.get('icon'))
         
         # 空欄チェック
         if not username:
