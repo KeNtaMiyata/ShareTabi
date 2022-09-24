@@ -13,12 +13,14 @@
     <table>
         <tbody>
             {% for user in users %}
-            <tr>
-                <td>icon</td>
-                <td>{{ user.name }}</td>
-                <td>{{ user.created_at}}</td>
-                <td><a href="/users/{{ user.id }}">link</a></td>
-            </tr>
+                {% if search == "" or search in user.name %}
+                    <tr>
+                        <td><img src="../static/icon/{{ user.icon }}.png" class="icon"></td>
+                        <td>{{ user.name }}</td>
+                        <td>{{ user.created_at}}</td>
+                        <td><a href="/users/{{ user.id }}">link</a></td>
+                    </tr>
+                {% endif %}
             {% endfor %}
         </tbody>
     </table>
