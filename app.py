@@ -1,3 +1,4 @@
+from asyncio.windows_events import NULL
 from importlib.resources import path
 from flask import Flask, flash, redirect, render_template, request, session
 from flask_sqlalchemy import SQLAlchemy
@@ -226,15 +227,44 @@ def new():
 @app.route("/travels", methods=["GET", "POST"])
 @login_required
 def travels():
-    travels = Travel.query.all()
+    travels = Travel.query.all() # 全ての投稿
+
+    list = [[]] # いいね数とidを入れるリスト
+
+    for i in range(len(travels)): # いいね数をカウントするループ
+        favorites = Favorite.query.filter(Favorite.travel_id == (i + 1)).all()
+        favorites_count = len(favorites)
+        list.append([favorites_count, i + 1])
+
+    list.sort(reverse = True) # いいね数の降順でソート
+
+    favorites_count1 = list[0][0] # リスト1番目のいいね数
+    favorites_count2 = list[1][0]
+    favorites_count3 = list[2][0]
+    travel_id1 = list[0][1] # リスト1番目のid
+    travel_id2 = list[1][1]
+    travel_id3 = list[2][1]
+    no1 = 1 # リスト1番目の順位
+    no2 = 2
+    no3 = 3
+
+    if favorites_count2 == favorites_count1: # リスト2番目が1番目と同じいいね数なら同じ順位に
+        no2 = no1
+    if favorites_count3 == favorites_count2: # リスト3番目が2番目と同じいいね数なら同じ順位に
+        no3 = no2
+
+    travel_no1 = Travel.query.get(travel_id1) # リスト1番目の投稿
+    travel_no2 = Travel.query.get(travel_id2) # リスト2番目の投稿
+    travel_no3 = Travel.query.get(travel_id3) # リスト3番目の投稿
+   
     if (request.method == "GET"):
         search = ""
     
     else: # request.method == "POST"
         search = request.form["search"]
-
-    return render_template("travels.html", travels=travels, search=search)
-
+    
+    return render_template("travels.html", travels=travels, search=search, travel_no1=travel_no1, travel_no2=travel_no2, travel_no3=travel_no3, no1=no1, no2=no2, no3=no3)
+    
 
 # 個々の投稿を表示するページ
 @app.route("/travels/<int:travel_id>", methods=["GET","POST"])
