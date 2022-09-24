@@ -9,3 +9,45 @@
     color:green;
     background-color: rgb(0,255,0);
 }
+
+select.imgSel
+{
+    background-repeat: no-repeat;
+    background-position: 2px 0; /* 背景画像を若干右に移動 */
+    padding-left: 60px; /* 画像.width + α background-position */
+    height: 32px; /* 画像.height + 2 (borderの分を足す) */
+    font-size: 22px;  /* 画像.height - 3 */
+}
+_::-webkit-full-page-media, _:future, select.imgSel {
+    -webkit-appearance: button;
+    appearance: button;
+}
+
+.contaner
+{
+    display: flex;
+}
+.body /* 本体 */
+{
+    flex: 1 1 80%;
+    text-align:center;
+}
+.sidebar /* サイドバー */
+{
+    position: sticky; /* 本体をスクロールしても画面に固定される */
+    top: 0;
+    height: 600px;
+    flex: 1 1 20%;
+    background-color:#ff838b;
+    text-align:center;
+    margin-left:10px; /*サイドバーとメインコンテンツの間に隙間をあけた*/
+}
+
+.travel_icon
+{
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    border: 3px solid #fff;
+    display: inline-block;
+}

@@ -13,43 +13,54 @@
         {% endif %}
     {% endwith %}
 
-    <form action="/travels" method="post">
-        <input type="text" name="search" placeholder="Tabi に関連する用語を入れて下さい">
-        <button class="form-control mx-auto w-auto" type="submit">検索</button>
-    </form>
-
-    <table>
-        <thead>
-
-        </thead>
-        <tbody>
-            {% for travel in travels %}
-                {% if search == "" 
-                or search in travel.title 
-                or search in travel.report 
-                or search in travel.location %}
-                    <tr>
-                        <td><a href="http://twitter.com/share"
-                            class="twitter-share-button"
-                            data-text="{{ travel.report }}"
-                            data-count="horizotal"
-                            >
-                            ツイート
-                        </a>
-                        </td>
-                        <td>{{ travel.created_at}}</td>
-                        <td>{{ travel.title }}</td>
-                        <td>{{ travel.date }}</td>
-                        <td>{{ travel.location }}</td>
-                        <td>{{ travel.report }}</td>
-                        <td><a href="/travels/{{ travel.id }}">link</a></td>
-                        <td>
-                            <img src="../static/images/post/{{ travel.user_id }}_{{ travel.id }}.png" width="100" height="100"><br>
-                        </td>
-                    </tr>
-                {% endif %}
-            {% endfor %}
-        </tbody>
-    </table>
-    
+    <body>
+        <div class="contaner">
+            <div class="body">
+            
+                <form action="/travels" method="post">
+                    <input type="text" name="search" placeholder="Tabi に関連する用語を入れて下さい">
+                    <button class="form-control mx-auto w-auto" type="submit">検索</button>
+                </form>
+                
+                {% for travel in travels %}
+                    {% if search == "" 
+                    or search in travel.title 
+                    or search in travel.report 
+                    or search in travel.location %}
+                        <tr>
+                            <td><a href="http://twitter.com/share"
+                                class="twitter-share-button"
+                                data-text="{{ travel.report }}"
+                                data-count="horizotal"
+                                >
+                                ツイート
+                            </a>
+                            </td>
+                            <td>{{ travel.created_at}}</td>
+                            <td>{{ travel.title }}</td>
+                            <td>{{ travel.date }}</td>
+                            <td>{{ travel.location }}</td>
+                            <td>{{ travel.report }}</td>
+                            <td><a href="/travels/{{ travel.id }}">link</a></td>
+                            <td>
+                                <img src="../static/images/post/{{ travel.user_id }}_{{ travel.id }}.png" width="100" height="100"><br>
+                            </td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <div class="sidebar">
+                <h1>いいねランキング</h1>
+                <p>第{{ no1 }}位</p>
+                <p><img src="../static/images/post/{{ travel_no1.user_id }}_{{ travel_no1.id }}.png" class="travel_icon"></p>
+                <p>{{ travel_no1.title }}<a href="/travels/{{ travel_no1.id }}">link</a></p>
+                <p>第{{ no2 }}位</p>
+                <p><img src="../static/images/post/{{ travel_no2.user_id }}_{{ travel_no2.id }}.png" class="travel_icon"></p>
+                <p>{{ travel_no2.title }}<a href="/travels/{{ travel_no2.id }}">link</a></p>
+                <p>第{{ no3 }}位</p>
+                <p><img src="../static/images/post/{{ travel_no3.user_id }}_{{ travel_no3.id }}.png" class="travel_icon"></p>
+                <p>{{ travel_no3.title }}<a href="/travels/{{ travel_no3.id }}">link</a></p>
+            </div>
+        </div>
+    <body>
 {% endblock %}
