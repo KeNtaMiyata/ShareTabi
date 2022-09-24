@@ -39,12 +39,16 @@
                 {% endfor %}
             </div>
             <div class="sidebar">
-                <p>いいねランキング</p>
-                <ul>
-                <li>第１位{{ no1.title }}</li>
-                <li>第２位{{ no2.title }}</li>
-                <li>第３位{{ no3.title }}</li>
-                </ul>
+                <h1>いいねランキング</h1>
+                <p>第{{ no1 }}位</p>
+                <p><img src="../static/images/post/{{ travel_no1.user_id }}_{{ travel_no1.id }}.png" class="travel_icon"></p>
+                <p>{{ travel_no1.title }}<a href="/travels/{{ travel_no1.id }}">link</a></p>
+                <p>第{{ no2 }}位</p>
+                <p><img src="../static/images/post/{{ travel_no2.user_id }}_{{ travel_no2.id }}.png" class="travel_icon"></p>
+                <p>{{ travel_no2.title }}<a href="/travels/{{ travel_no2.id }}">link</a></p>
+                <p>第{{ no3 }}位</p>
+                <p><img src="../static/images/post/{{ travel_no3.user_id }}_{{ travel_no3.id }}.png" class="travel_icon"></p>
+                <p>{{ travel_no3.title }}<a href="/travels/{{ travel_no3.id }}">link</a></p>
             </div>
         </div>
     <body>
