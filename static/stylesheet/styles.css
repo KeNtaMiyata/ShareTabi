@@ -473,6 +473,7 @@ section h2 span {
 	section h2{
 		margin: 55px auto;
 	}
+}
 
 select.imgSel
 {
@@ -482,15 +483,17 @@ select.imgSel
     height: 32px; /* 画像.height + 2 (borderの分を足す) */
     font-size: 22px;  /* 画像.height - 3 */
 }
+
 _::-webkit-full-page-media, _:future, select.imgSel {
     -webkit-appearance: button;
     appearance: button;
 }
 
-.contaner
+.container
 {
     display: flex;
 }
+
 .body /* 本体 */
 {
     flex: 1 1 80%;
