@@ -35,6 +35,7 @@ class User(UserMixin, db.Model):
     name = db.Column(db.String(15), nullable=False, unique=True)
     password = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(25), nullable=False, unique=True)
+    icon = db.Column(db.Integer, nullable=False)
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.datetime.now(pytz.timezone('Asia/Tokyo')))
     travels = db.relationship('Travel', backref='user', lazy=True)
     comments = db.relationship('Comment', backref='user', lazy=True)
@@ -133,6 +134,7 @@ def register():
         password = request.form.get('password')
         confirmation = request.form.get('confirmation')
         email = request.form.get('email')
+        icon = int(request.form.get('icon'))
         
         # 空欄チェック
         if not username:
@@ -170,7 +172,7 @@ def register():
             
         except:
             # 記入情報を登録する
-            user = User(name=username, password=generate_password_hash(password), email=email)
+            user = User(name=username, password=generate_password_hash(password), email=email, icon=icon)
             db.session.add(user)
             db.session.commit()
             
