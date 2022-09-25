@@ -1,68 +1,90 @@
 {% extends "layout.html" %}
 
+{% block head_css %}
+<link href="/static/stylesheet/travels.css" rel="stylesheet">
+{% endblock %}
+
 {% block title %}
     Travels
 {% endblock %}
 
 {% block main %}
     <body>
-        <div class="container">
-            <div class="body">
-                <div class="row">
-                    <form action="/travels" method="post">
-                        <input type="text" name="search" placeholder="Tabi に関連する用語を入れて下さい">
-                        <button class="form-control mx-auto w-auto" type="submit">検索</button>
-                    </form>
-
-                    {% for travel in travels %}
-                        {% if search == "" 
-                        or search in travel.title 
-                        or search in travel.report 
-                        or search in travel.location %}
-                            <div class="col-3 mt-1">
+        <div class="content mx-auto">
+            <div class="cont">
+                <div class="body">
+                    <div class="container-fluid">
+                        <div class="row">
+    
+                                <!-- <div class="col-10">
+                                    <form class="search my-3" action="/travels" method="post">
+                                        <input class="search-box" type="text" name="search" placeholder="Tabi に関連する用語を入れて下さい">
+                                        <button class="search-btn" type="submit"><i class="fas fa-search"></i></button>
+                                    </form>
+                                </div> -->
+                                
+    
+                            {% for travel in travels %}
+                            {% if search == "" 
+                            or search in travel.title 
+                            or search in travel.report 
+                            or search in travel.location %}
+                            <div class="col-3 mt-4 mx-auto cork">
                                 <a href="/travels/{{ travel.id }}">
                                     <table>
                                         <tbody>
+                                            <tr><div class="circle btn" style="z-index:10000"></div></tr>
                                             <tr>
-                                                <img src="../static/images/post/{{ travel.user_id }}_{{ travel.id }}.png" width="200" height="200"><br>
+                                                <div class="image mx-auto"><img src="../static/images/post/{{ travel.user_id }}_{{ travel.id }}.png"></div><br>
                                             </tr>
                                             <tr>
-                                                <td>{{ travel.date }}</td>
-                                                <td>{{ travel.location }}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>{{ travel.title }}</td>
-                                                <td>
-                                                    <a href="http://twitter.com/share" 
-                                                    class="twitter-share-button"
-                                                    data-text="{{ travel.report }}"
-                                                    data-count="horizotal">
-                                                    ツイート
-                                                    </a>
-                                                </td>
+                                                <ul class="notes">
+                                                    <li>
+                                                        <p>{{ travel.date }}</p>
+                                                        <p>{{ travel.location }}</p>
+                                                    </li>
+                                                    <li>
+                                                        <p>{{ travel.title }}</p>
+                                                        <p>
+                                                            <a href="http://twitter.com/share" 
+                                                            class="twitter-share-button"
+                                                            data-text="{{ travel.report }}"
+                                                            data-count="horizotal">
+                                                            ツイート
+                                                            </a>
+                                                        </p>
+                                                    </li>
+                                                </ul>
                                             </tr>
                                         </tbody>
                                     </table>
                                 </a>
                             </div>
-                        {% endif %}
-                    {% endfor %}
+                            {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
                 </div>
-            
-                
-            </div>
             <div class="sidebar">
                 <h1>いいねランキング</h1>
-                <p>第{{ no1 }}位</p>
-                <p><img src="../static/images/post/{{ travel_no1.user_id }}_{{ travel_no1.id }}.png" class="travel_icon"></p>
-                <p>{{ travel_no1.title }}<a href="/travels/{{ travel_no1.id }}">link</a></p>
-                <p>第{{ no2 }}位</p>
-                <p><img src="../static/images/post/{{ travel_no2.user_id }}_{{ travel_no2.id }}.png" class="travel_icon"></p>
-                <p>{{ travel_no2.title }}<a href="/travels/{{ travel_no2.id }}">link</a></p>
-                <p>第{{ no3 }}位</p>
-                <p><img src="../static/images/post/{{ travel_no3.user_id }}_{{ travel_no3.id }}.png" class="travel_icon"></p>
-                <p>{{ travel_no3.title }}<a href="/travels/{{ travel_no3.id }}">link</a></p>
-            </div>
+                <a href="/travels/{{ travel_no1.id }}">
+                    <p>第{{ no1 }}位</p>
+                    <p><img src="../static/images/post/{{ travel_no1.user_id }}_{{ travel_no1.id }}.png" class="travel_icon"></p>
+                    <p>{{ travel_no1.title }}</p>
+                </a>
+                
+                <a href="/travels/{{ travel_no2.id }}">
+                    <p>第{{ no2 }}位</p>
+                    <p><img src="../static/images/post/{{ travel_no2.user_id }}_{{ travel_no2.id }}.png" class="travel_icon"></p>
+                    <p>{{ travel_no2.title }}</p>
+                </a>
+                
+                <a href="/travels/{{ travel_no3.id }}">
+                    <p>第{{ no3 }}位</p>
+                    <p><img src="../static/images/post/{{ travel_no3.user_id }}_{{ travel_no3.id }}.png" class="travel_icon"></p>
+                    <p>{{ travel_no3.title }}</p>
+                </a>
+            </div>          
         </div>
     <body>
 {% endblock %}

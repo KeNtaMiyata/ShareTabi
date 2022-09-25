@@ -16,25 +16,12 @@ body {
 
 /* Start form  attributes */
 form {
+    width: 75%;
     min-height: 500px;
     height: auto;
     border-radius: 5px;
     box-shadow: 0 9px 50px hsla(20, 67%, 75%, 0.31);
     background-image: linear-gradient(-225deg, #E3FDF5 50%, #FFE6FA 50%);
-}
-
-/* form Container */
-form .con {
-    display: -webkit-flex;
-    display: flex;
-  
-    -webkit-justify-content: space-around;
-    justify-content: space-around;
-  
-    -webkit-flex-wrap: wrap;
-    flex-wrap: wrap;
-  
-    margin: 0 auto;
 }
 
 .head-form {

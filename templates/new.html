@@ -5,61 +5,60 @@
 {% endblock %}
 
 {% block title %}
-    世界に届け私のTabi
+    世界に届けわたしのTabi
 {% endblock %}
 
 {% block main %}
 <div class="overlay">
-    <div class="con py-3">
-        <form class="w-75 mx-auto p-1">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-11 mx-auto">
-                        <div class="head-form">
-                            <h2>Post New Tabi !!</h2>
-                            <h4>～世界に届けわたしのTabi～</h4>
+    <div class="container-fluid">
+        <div class="row">
+            <form class="w-75 mx-auto p-1" action="/new" method="post" enctype = "multipart/form-data">
+                <div class="py-3">
+                        <div class="col-11 mx-auto">
+                            <div class="head-form">
+                                <h2>Post New Tabi !!</h2>
+                                <h4>～世界に届けわたしのTabi～</h4>
+                            </div>
+                        </div>
+                        
+                        <div class="col-6 offset-md-3">
+                            <span class="input-item">
+                            </span>
+                            <input autocomplete="off" autofocus class="form-input" id="title" name="title" type="text" placeholder="タイトル"><br>
+                        </div>
+
+                        <div class="col-6 offset-md-3 mt-3">
+                            <span class="input-item">
+                            </span>
+                            <input class="form-input" id="date" name="date" type="date" required>
+                            <br>
+                        </div>
+
+                        <div class="col-6 offset-md-3 mt-3">
+                            <span class="input-item">
+                            </span>
+                            <input class="form-input" id="location" name="location" placeholder="場所" type="text" required>
+                            <br>
+                        </div>
+
+                        <div class="col-10 mx-auto mt-3">
+                            <textarea class="form-input" id="report" name="report" placeholder="どんな旅でしたか？みんなにＳＨＡＲＥしよう！" type="text" rows="7" required></textarea><br>
+                        </div>
+
+                        <div class="col-6 offset-md-3 text-center mt-3">
+                            <label for="image" class="btn-c mx-auto text-center mb-3">
+                                クリックして旅の写真をのせよう！
+                            </label>
+                            <input class="file-input" id="image" name="image" type="file" accept='image/*' onchange="previewImage(this);" required>
+                            <img id="preview" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" style="max-width:300px;">
+                        </div>                
+                        
+                        <div class="col-4 mx-auto mt-3">
+                            <button type="submit" class="btn btn-gradient"><span>SHARE TABI to the World !!</span></button>
                         </div>
                     </div>
-                    
-                    <div class="col-6 offset-md-3">
-                        <span class="input-item">
-                        </span>
-                        <input autocomplete="off" autofocus class="form-input" id="title" name="title" type="text" placeholder="タイトル"><br>
-                    </div>
-
-                    <div class="col-6 offset-md-3 mt-3">
-                        <span class="input-item">
-                        </span>
-                        <input class="form-input" id="date" name="date" type="date" required>
-                        <br>
-                    </div>
-
-                    <div class="col-6 offset-md-3 mt-3">
-                        <span class="input-item">
-                        </span>
-                        <input class="form-input" id="location" name="location" placeholder="場所" type="text" required>
-                        <br>
-                    </div>
-
-                    <div class="col-10 mx-auto mt-3">
-                        <textarea class="form-input" id="report" name="report" placeholder="どんな旅でしたか？みんなにＳＨＡＲＥしよう！" type="text" rows="7" required></textarea><br>
-                    </div>
-
-                    <div class="col-6 offset-md-3 text-center mt-3">
-                        <label for="image" class="btn-c mx-auto text-center">
-                            クリックして旅の写真をのせよう！
-                        </label>
-                        <input class="file-input" id="image" name="image" type="file" accept='image/*' onchange="previewImage(this);">
-                        <img id="preview" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" style="max-width:300px;">
-                    </div>                
-
-                    <div class="col-4 mx-auto mt-3">
-                        <button class="btn btn-gradient"><span>SHARE TABI to the World !!</span></button>
-                    </div>
-
-                </div>
+                </form>
             </div>      
-        </form>
     </div>                          
 </div>
 

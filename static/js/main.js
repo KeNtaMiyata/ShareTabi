@@ -51,3 +51,24 @@ function previewImage(obj)
 	});
 	fileReader.readAsDataURL(obj.files[0]);
 }
+
+
+// gabyoの色
+// let gabyocolor;
+// let rand=Math.floor(Math.random()*5);
+// if (rand == 0) {
+//     gabyocolor = "g-yellow";
+// }
+// if (rand == 1) {
+//     gabyocolor = "g-pink";
+// }
+// if (rand == 2) {
+//     gabyocolor = "g-red";
+// }
+// if (rand == 3) {
+//     gabyocolor = "g-blue";
+// }
+// if (rand == 4) {
+//     gabyocolor = "g-green";
+// }
+// document.getElementsByClassName("circle").classList.add(gabyocolor);
