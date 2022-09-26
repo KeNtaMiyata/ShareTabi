@@ -14,13 +14,16 @@ object,embed{vertical-align:top;}
 legend{display:none;}
 img,abbr,acronym,fieldset{border:0;}
 
+a{
+	text-decoration: none;
+}
 
 .content {
     min-height: 800px;
     height: auto;
     border-radius: 5px;
     box-shadow: 0 9px 50px hsla(20, 67%, 75%, 0.31);
-    background-image: url(../images/top/world.jpg);
+    background-image: url(../images/back/world.jpg);
     background-size: cover;
     background-position: center;
 }
@@ -88,7 +91,6 @@ _::-webkit-full-page-media, _:future, select.imgSel {
     background-size: cover;
     background-position: center;
     padding: 15px 0;
-    
     border: outset 10px #d4ba9b;
  }
 
@@ -124,8 +126,9 @@ _::-webkit-full-page-media, _:future, select.imgSel {
 
 .image {
 	position: relative;
-    width: 275px;
+    width: 100%;
     height: auto;
+    max-height: 200px;
     background-color: #E3FDF5;
     overflow:hidden;
     margin: -15px 0 15px 0;
@@ -147,9 +150,8 @@ _::-webkit-full-page-media, _:future, select.imgSel {
 }
 
 .image img{
-    width: calc(100% - 20px) ;
-	height: auto;
-    
+    width: calc(100% - 20px);
+	height: auto;   
 }
 
 .notes{
@@ -161,7 +163,8 @@ _::-webkit-full-page-media, _:future, select.imgSel {
     width: 90%;
     min-height: 50px;
     margin: 0 auto;
-    padding: 15px 15px 5px 15px;
+    margin-top: 20px;
+    padding: 25px 15px 2px 15px;
     background: #f1f3a2;
     background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(247,247,210,1)), to(rgba(240,242,155,1)));
     background: -moz-linear-gradient(top, rgba(247,247,210,1), rgba(240,242,155,1));
@@ -178,7 +181,8 @@ _::-webkit-full-page-media, _:future, select.imgSel {
     -moz-transform: rotate(.5deg);
     -o-transform: rotate(.5deg);
 }
- 
+
+
 .notes li p {
     text-align: center;
     font: normal normal normal 2em/1.2em 'Reenie Beanie', Helvetica, Arial, sans-serif;
@@ -189,14 +193,14 @@ _::-webkit-full-page-media, _:future, select.imgSel {
 }
 
 .notes li:nth-child(even){
-    margin-top: 25px;
+    margin-top: 20px;
 }
  
 .notes li::before {
     content: ' ';
     display: block;
     position: absolute;
-    left: 70px;
+    left: 40px;
     top: -15px;
     width: 75px;
     height: 25px;
@@ -212,7 +216,7 @@ _::-webkit-full-page-media, _:future, select.imgSel {
 }
  
 .notes li:nth-child(even)::before {
-    left: 120px;
+    left: 50px;
     -webkit-transform: rotate(6deg);
     -moz-transform: rotate(6deg);
     -o-transform: rotate(6deg);
@@ -230,6 +234,7 @@ _::-webkit-full-page-media, _:future, select.imgSel {
 
 .search-box{
     height:50px;
+    width: 300px;
     padding:0 10px; 
     position:absolute; 
     left:0;
@@ -243,7 +248,7 @@ _::-webkit-full-page-media, _:future, select.imgSel {
     height:50px;
     width:50px;	
     position:absolute; 
-    left:250px; 
+    left: 275px;  /* search-box の width - search-box の border-radius   */
     top:0;
     background:#7fbfff;
     color:#fff;

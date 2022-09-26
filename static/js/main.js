@@ -72,3 +72,14 @@ function previewImage(obj)
 //     gabyocolor = "g-green";
 // }
 // document.getElementsByClassName("circle").classList.add(gabyocolor);
+
+
+// 削除確認
+function confirm_delete(){
+  if (confirm( "削除してよいですか？" )){
+      return true;
+  }
+  else{
+      return false
+  }
+}

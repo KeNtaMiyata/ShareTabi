@@ -526,7 +526,8 @@ _::-webkit-full-page-media, _:future, select.imgSel {
 {
     text-align:center;
 }
-  
+
+/* ユーザーのアイコン */
 .icon
 {
     border-radius: 50%;
