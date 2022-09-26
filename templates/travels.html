@@ -71,25 +71,25 @@
                         </div>
                     </div>
                 </div>
-            <div class="sidebar cork me-1">
-                <h1>いいねランキング</h1>
-                <div class="my-3">
-                    <a href="/travels/{{ travel_no1.id }}">
+            <div class="sidebar me-3 mt-5 pt-4">
+                <h2 class="mb-3">いいねランキング</h2>
+                <div class="my-3 ">
+                    <a class="favo-1" href="/travels/{{ travel_no1.id }}">
                         <h3>第{{ no1 }}位</h3>
-                        <p><img src="../static/images/post/{{ travel_no1.user_id }}_{{ travel_no1.id }}.png" class="travel_icon me-2">{{ travel_no1.title }}</p>
+                        <p><i class="fas fa-crown me-2 fa-3x"></i><img src="../static/images/post/{{ travel_no1.user_id }}_{{ travel_no1.id }}.png" class="travel_icon me-2">{{ travel_no1.title }}</p>
                     </a>
                 </div>
                 
                 <div class="mt-5">
-                    <a href="/travels/{{ travel_no2.id }}">
+                    <a class="favo-2" href="/travels/{{ travel_no2.id }}">
                         <h4 class="mt-2">第{{ no2 }}位</h4>
-                        <p><img src="../static/images/post/{{ travel_no2.user_id }}_{{ travel_no2.id }}.png" class="travel_icon me-2">{{ travel_no2.title }}</p>
+                        <p><i class="fas fa-crown me-2 fa-2x"></i><img src="../static/images/post/{{ travel_no2.user_id }}_{{ travel_no2.id }}.png" class="travel_icon me-2">{{ travel_no2.title }}</p>
                     </a>
                 </div>
                 <div class="mt-5">
-                    <a href="/travels/{{ travel_no3.id }}">
-                        <h5 class="mt-2">第{{ no3 }}位</h5>
-                        <p><img src="../static/images/post/{{ travel_no3.user_id }}_{{ travel_no3.id }}.png" class="travel_icon me-2">{{ travel_no3.title }}</p>
+                    <a class="favo-3" href="/travels/{{ travel_no3.id }}">
+                        <h4 class="mt-2">第{{ no3 }}位</h4>
+                        <p><i class="fas fa-crown me-2 fa-2x"></i><img src="../static/images/post/{{ travel_no3.user_id }}_{{ travel_no3.id }}.png" class="travel_icon me-2">{{ travel_no3.title }}</p>
                     </a>
                 </div>
             </div>          

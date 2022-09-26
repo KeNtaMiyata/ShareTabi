@@ -55,13 +55,61 @@ _::-webkit-full-page-media, _:future, select.imgSel {
 
 .sidebar /* サイドバー */
 {
+    color: #252537;
+
+    background-image: -webkit-linear-gradient(110deg, #e9defa 0%, #fbfcdb 100%);
+    background-image: linear-gradient(-20deg, #e9defa 0%, #fbfcdb 100%);
+    -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
+
     position: sticky; /* 本体をスクロールしても画面に固定される */
-    top: 0;
+    top: 80px;
     height: 600px;
     flex: 1 1 20%;
-    background-color:#ff838b;
+
     text-align:center;
     margin-left:10px; /*サイドバーとメインコンテンツの間に隙間をあけた*/
+
+}
+
+.sidebar{
+    margin:2em 0;
+    padding: 0.25em 1em;
+    border: solid 2px #ffcb8a;
+    border-radius: 3px 0 3px 0;
+}
+.sidebar:before,.sidebar:after
+{
+    content: '';
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    border: solid 3px #DBB400;
+    border-radius: 50%;
+}
+.sidebar:after {
+    top:-12px;
+    left:-12px;
+}
+.sidebar:before {
+    bottom:-12px;
+    right:-12px;
+}
+.sidebar p {
+    margin: 0; 
+    padding: 0;
+}
+
+.favo-1, .favo-1:hover{
+    color: #DBB400;
+}
+
+.favo-2, .favo-2:hover{
+    color: #B9C3C9;
+}
+
+.favo-3, .favo-3:hover{
+    color: #C08D5E;
 }
 
 .travel_icon
@@ -101,6 +149,7 @@ _::-webkit-full-page-media, _:future, select.imgSel {
     height: 25px;
     padding: 0;
     background-color: yellow;
+    border: solid 1.5px #fff;
     z-index:10000
 }
 

@@ -55,6 +55,7 @@ a{
 	position: relative;
     width: 100%;
     height: auto;
+    max-height: 500px;
     background-color: #E3FDF5;
     overflow:hidden;
     margin: -25px 0 25px 0;
@@ -190,6 +191,7 @@ a{
     width: 25px;
     height: auto;
 }
+
 .comment{
     height: 500px;
     overflow-x: hidden;

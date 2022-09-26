@@ -26,7 +26,7 @@
                         {% if travel.user_id == current_user.id %}
                         <div class="mt-4">
                             <a class="btn btn-outline-success col-5 ms-3" href="/travels/{{ travel.id }}/edit"><i class="far fa-edit me-1"></i>Edit</a>
-                            <a class="btn btn-outline-danger col-5 offset-1" href="/travels/{{ travel.id }}/delete"><i class="fas fa-trash-alt me-1"></i>Delete</a>
+                            <a class="btn btn-outline-danger col-5 offset-1" href="/travels/{{ travel.id }}/delete" onclick="return confirm_delete()"><i class="fas fa-trash-alt me-1"></i>Delete</a>
                         </div>
                         {% endif %}
                     </div>
@@ -114,7 +114,7 @@
                             <!-- ユーザーがコメント本人だったら、削除ボタンを表示 -->
                             {% if comment.user_id == current_user.id %}
                             <td class="ps-3">
-                                <a class="btn btn-danger " href="/travels/{{ travel.id }}/comments/{{ comment.id }}/delete"><i class="fas fa-trash-alt fa-lg "></i></a>
+                                <a class="btn btn-danger " href="/travels/{{ travel.id }}/comments/{{ comment.id }}/delete" onclick="return confirm_delete()"><i class="fas fa-trash-alt fa-lg "></i></a>
                             </td>
                             {% endif %}
                         </tr>
