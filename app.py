@@ -1,3 +1,5 @@
+from asyncio.windows_events import NULL
+from http import client
 from importlib.resources import path
 from flask import Flask, flash, redirect, render_template, request, session
 from flask_sqlalchemy import SQLAlchemy
@@ -7,6 +9,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 import datetime
 import os
 import pytz
+import googlemaps
 
 # アップロードされる拡張子の制限
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'gif'])
@@ -16,13 +19,19 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///sharetabi.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = True # ログ出力
-           
+     
 # シークレットキーの設定。セッション情報を暗号化するための設定。
 app.config['SECRET_KEY'] = os.urandom(24)
 app.config["TEMPLATES_AUTO_RELOAD"] = True # Ensure templates are auto-reloaded
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False # SADeprecationWarning: SQLALCHEMY_TRACK_MODIFICATIONS adds significant overhead and will be disabled by default in the future.
 
+# Google Map API Keyの設定
+# app.config['GOOGLEMAPS_KEY'] = "AIzaSyDDJgw-Gp8YTC6it7DdakobT-rIfrVXzmo" 
+googleapikey = 'AIzaSyDDJgw-Gp8YTC6it7DdakobT-rIfrVXzmo'
+client = googlemaps.Client(key=googleapikey)
+
 db = SQLAlchemy(app)
+
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -213,7 +222,10 @@ def new():
 
 
     else:
-        return render_template("new.html")
+        location = request.args.get['var1']
+        print(location)
+        return render_template("new.html", location)
+    
 
 
 # 投稿一覧を表示するページ
@@ -330,3 +342,27 @@ def favorite(travel_id):
         db.session.commit()
 
     return redirect(f"/travels/{ travel_id }")
+
+# 場所検索機能
+@app.route("/visited_location", methods=["GET","POST"])
+@login_required
+def visited_location():
+    if request.method == "POST":
+        location = request.form.get("location_name")
+        print(location)
+        
+        # 検索ボックスが空白だった時
+        if not location:
+            return render_template("search_location.html", location=location)
+        
+        try:
+            locations = client.places_autocomplete(input_text=location, language='ja')
+            print(locations[0]['description'])
+        except:
+            return render_template("search_location.html", message="検索結果なし")
+        
+        else:
+            return render_template("search_location.html", location=location, locations=locations)
+        
+    else:
+        return render_template("search_location.html")
