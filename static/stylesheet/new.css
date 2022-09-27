@@ -1,0 +1,246 @@
+/* Fonts Form Google Font ::- https://fonts.google.com/  -:: */
+@import url('https://fonts.googleapis.com/css?family=Abel|Abril+Fatface|Alegreya|Arima+Madurai|Dancing+Script|Dosis|Merriweather|Oleo+Script|Overlock|PT+Serif|Pacifico|Playball|Playfair+Display|Share|Unica+One|Vibur');
+
+/* Start body rules */
+body {
+    background-image: linear-gradient(-225deg, #E3FDF5 0%, #FFE6FA 100%);
+    background-image: linear-gradient(to top, #a8edea 0%, #fed6e3 100%);
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+
+    font-family: 'Vibur', cursive;
+    font-family: 'Abel', sans-serif;
+    opacity: .95;
+/* background-image: linear-gradient(to top, #d9afd9 0%, #97d9e1 100%); */
+}
+
+/* Start form  attributes */
+form {
+    width: 75%;
+    min-height: 500px;
+    height: auto;
+    border-radius: 5px;
+    box-shadow: 0 9px 50px hsla(20, 67%, 75%, 0.31);
+    background-image: linear-gradient(-225deg, #E3FDF5 50%, #FFE6FA 50%);
+}
+
+.head-form {
+    margin: 2% auto 2% auto;
+    text-align: center;
+}
+
+.head-form h2 {
+    font-size: 250%;
+    font-family: 'Playfair Display', serif;
+    color: #3e403f;
+}
+
+.head-form p {
+    letter-spacing: 0.05em;
+}
+
+
+.input-item {
+    background: #fff;
+    color: #333;
+    padding: 14.5px 0px 15px 9px;
+    border-radius: 5px 0px 0px 5px;
+}
+
+/* Show/hide password Font Icon */
+#eye {
+    background: #fff;
+    color: #333;
+  
+    margin: 5.9px 0 0 0;
+    margin-left: -20px;
+    padding: 15px 9px 19px 0px;
+    border-radius: 0px 5px 5px 0px;
+  
+    float: right;
+    position: relative;
+    right: 1%;
+    top: -.2%;
+    z-index: 5;
+    
+    cursor: pointer;
+}
+
+/* inputs form  */
+input[class="form-input"]{
+    width: 100%;
+    height: 50px;
+    margin-top: 2%;
+    padding: 0 15px;
+    font-size: 16px;
+    font-family: 'Abel', sans-serif;
+    color: #5E6472;
+    outline: none;
+    border: none;
+    border-radius: 0px 5px 5px 0px;
+    transition: 0.2s linear;
+}
+
+input:focus {
+    transform: translateX(-2px);
+    border-radius: 5px;
+}
+
+textarea[class="form-input"]{
+    width: 100%;
+    margin-top: 2%;
+    padding: 0 15px;
+    font-size: 16px;
+    font-family: 'Abel', sans-serif;
+    color: #5E6472;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    transition: 0.2s linear;
+}
+
+.file-label{
+    width: 75%;
+    margin: 0 auto;
+    display: inline-block;
+    position: relative;
+    background-color: #FFE6FA;
+    font-size: large;
+    font-weight: 700;
+    line-height: 1.5;
+    padding: 1rem 4rem;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-transition: all 0.3s;
+    transition: all 0.3s;
+    text-align: center;
+    vertical-align: middle;
+    text-decoration: none;
+    letter-spacing: 0.1em;
+    color: #212529;
+    border-radius: 0.5rem;
+}
+
+.file-input{
+    display: none;
+}
+
+.btn-c {
+    width: 75%;
+    margin: 0 auto;
+    font-size: 1rem;
+    position: relative;
+    padding: 1rem 2rem 1rem 1rem;
+    -webkit-transition: all 0.3s;
+    transition: all 0.3s;
+    color: #fff;
+    border-radius: 100vh;
+    background-image: -webkit-gradient(
+        linear,
+        left top,
+        right top,
+        from(#007adf),
+        to(#00ecbc)
+    );
+    background-image: -webkit-linear-gradient(left, #007adf 0%, #00ecbc 100%);
+    background-image: linear-gradient(to right, #007adf 0%, #00ecbc 100%);
+    -webkit-box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
+}
+
+.btn-c:before {
+    font-family: "Font Awesome 5 Free";
+    font-size: 1rem;
+    line-height: 1;
+
+    position: absolute;
+    top: calc(50% - 0.8rem);
+    right: 1rem;
+
+    margin: 0;
+    padding: 0;
+
+    content: "\f30b";
+}
+
+.btn-c:hover {
+-webkit-transform: scale(1.1);
+transform: scale(1.1);
+
+color: #fff;
+}
+
+.btn-preview{
+    background: #fff;
+}
+
+
+/* buttons  */
+button {
+    display: inline-block;
+    color: #252537;
+    width: 100%;
+    height: 50px;
+    padding: 0 20px;
+    background: #fff;
+    border-radius: 5px;
+    
+    outline: none;
+    border: none;
+  
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.2s linear;
+    
+    margin: 7% auto;
+    letter-spacing: 0.05em;
+}
+
+/* Submits */
+.submits {
+    width: 48%;
+    display: inline-block;
+    float: left;
+    margin-left: 2%;
+}
+
+.btn-gradient {
+    font-size: 1.5rem;
+    color: #252537;
+    border-radius: 100vh;
+    background-image: -webkit-linear-gradient(110deg, #e9defa 0%, #fbfcdb 100%);
+    background-image: linear-gradient(-20deg, #e9defa 0%, #fbfcdb 100%);
+    -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
+}
+  
+.btn-gradient span {
+    background-image: -webkit-gradient(linear, left top, right top, from(#93a5cf), to(#e4efe9));
+    background-image: -webkit-linear-gradient(left, #93a5cf 0%, #e4efe9 100%);
+    background-image: linear-gradient(to right, #93a5cf 0%, #e4efe9 100%);
+    -webkit-background-clip: text;
+    /* -webkit-text-fill-color: transparent; */
+}
+
+/* buttons hover */
+button:hover {
+    transform: translatey(3px);
+    box-shadow: none;
+}
+
+
+/* buttons hover Animation */
+button:hover {
+    animation: ani9 0.4s ease-in-out infinite alternate;
+}
+@keyframes ani9 {
+    0% {
+        transform: translateY(4px);
+    }
+    100% {
+        transform: translateY(5px);
+    }
+}

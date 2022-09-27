@@ -11,14 +11,11 @@
     </form>
 
     <table>
-        <thead>
-
-        </thead>
         <tbody>
             {% for user in users %}
                 {% if search == "" or search in user.name %}
                     <tr>
-                        <td><img src="../static/icon/{{ user.icon }}.png" class="icon"></td>
+                        <td><img src="../static/images/icon/{{ user.icon }}.png" class="icon"></td>
                         <td>{{ user.name }}</td>
                         <td>{{ user.created_at}}</td>
                         <td><a href="/users/{{ user.id }}">link</a></td>
@@ -26,7 +23,6 @@
                 {% endif %}
             {% endfor %}
         </tbody>
-
     </table>
     
 {% endblock %}

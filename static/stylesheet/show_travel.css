@@ -1,0 +1,313 @@
+/* reset */
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+address,caption,cite,code,dfn,em,strong,th,var{font-style:normal;}
+ul{list-style:none;}
+table{border-collapse:collapse;border-spacing:0;}
+caption,th{text-align:left;}
+q:before,q:after{content:'';}
+object,embed{vertical-align:top;}
+legend{display:none;}
+img,abbr,acronym,fieldset{border:0;}
+
+a{
+	text-decoration: none;
+}
+
+.content {
+    min-height: 800px;
+    height: auto;
+    border-radius: 5px;
+    box-shadow: 0 9px 50px hsla(20, 67%, 75%, 0.31);
+}
+
+.back{
+    background-image: url(../images/back/world_2.jpg);
+    background-size: cover;
+    background-position: center;
+}
+
+.cork{
+	background-image: url(../images/back/cork.jpg);
+    background-size: cover;
+    background-position: center;
+    padding: 15px 0;
+    border: outset 10px #d4ba9b;
+ }
+
+ .circle {
+    position: relative;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    background-color: yellow;
+    border: solid 3px #fff;
+    z-index:10000;
+    margin: 0 auto;
+}
+
+ .image {
+	position: relative;
+    width: 100%;
+    height: auto;
+    max-height: 500px;
+    background-color: #E3FDF5;
+    overflow:hidden;
+    margin: -25px 0 25px 0;
+}
+
+.image::after {
+	content: '';
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: calc(100% + 10px);
+	height: calc(100% + 10px);
+	border-image-source: repeating-linear-gradient(45deg, #fff, #fff 3px, rgba(0 0 0 / 0) 0, rgba(0 0 0 / 0) 6px);
+	border-image-slice: 20;
+	border-image-repeat: round;
+	border-style: solid;
+	border-width: 20px;
+}
+
+.image img{
+    width: calc(100% - 20px) ;
+	height: auto;
+    margin: 0 10px;
+}
+
+
+.notes{
+    padding: 0;
+}
+
+.notes li {
+    position: relative;
+    width: 90%;
+    min-height: 50px;
+    margin: 0 auto;
+    margin-top: 25px;
+    padding: 25px 15px 2px 15px;
+    background: #f1f3a2;
+    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(247,247,210,1)), to(rgba(240,242,155,1)));
+    background: -moz-linear-gradient(top, rgba(247,247,210,1), rgba(240,242,155,1));
+    -webkit-box-shadow: 0 2px 12px rgba(0,0,0,.5);
+    -moz-box-shadow: 0 2px 12px (rgba(0,0,0.5));
+    box-shadow: 0 1px 2px #000;
+    -webkit-transform: rotate(-.5deg);
+    -moz-transform: rotate(-.5deg);
+    -o-transform: rotate(-.5deg);
+}
+
+
+/* テープの傾き */
+.notes li:nth-child(even) {
+    -webkit-transform: rotate(.5deg);
+    -moz-transform: rotate(.5deg);
+    -o-transform: rotate(.5deg);
+}
+ 
+.notes li p {
+    text-align: center;
+    font: normal normal normal 2em/1.2em 'Reenie Beanie', Helvetica, Arial, sans-serif;
+    color: #000;
+    font-size: medium;
+    text-shadow: white 1px 1px 0px;
+    overflow:hidden;
+}
+
+.notes li:nth-child(even){
+    margin-top: 25px;
+}
+ 
+.notes li::before {
+    content: ' ';
+    display: block;
+    position: absolute;
+    left: 35%;
+    top: -15px;
+    width: 75px;
+    height: 25px;
+    z-index: 2;
+    background-color: rgba(243,245,228,0.5);
+    border: 2px solid rgba(255,255,255,0.5);
+    -webkit-box-shadow: 0 0 5px #888;
+    -moz-box-shadow: 0 0 5px #888;
+    box-shadow: 2px 2px 2px #000;
+    -webkit-transform: rotate(-6deg);
+    -moz-transform: rotate(-6deg);
+    -o-transform: rotate(-6deg);
+}
+ 
+.notes li:nth-child(even)::before {
+    left: 45%;
+    -webkit-transform: rotate(6deg);
+    -moz-transform: rotate(6deg);
+    -o-transform: rotate(6deg);
+}
+
+.box h4{
+    position: relative;/*相対位置*/
+    padding-left: 1.2em;/*アイコン分のスペース*/
+    line-height: 1.4;/*行高*/
+}
+
+.box h4:before {
+    font-family: "Font Awesome 5 Free";
+    content: "\f075";/*アイコンのユニコード*/
+    font-weight: 900;
+    position: absolute;/*絶対位置*/
+    font-size: 1em;/*サイズ*/
+    left: 0;/*アイコンの位置*/
+    top: 0;/*アイコンの位置*/
+    color: #5ab9ff; /*アイコン色*/
+}
+
+.box form{
+    display: flex;
+}
+
+.hor{
+    position: relative;
+}
+
+.hor hr{
+    width: 90%;
+    margin: 0 auto;
+    background-color: #fff;
+    border-top: 4px dotted blue;
+    border-bottom: none;
+}
+
+.mini-icon{
+    position: absolute;
+    margin-top: 8px;
+    width: 25px;
+    height: auto;
+}
+
+.comment{
+    height: 500px;
+    overflow-x: hidden;
+}
+
+/* 吹き出し */
+.balloon_l {
+  display:flex;
+  justify-content: flex-start;
+  align-items: flex-start; /*縦位置を上揃え*/
+/*   align-items: center; */ /*縦位置を真ん中揃え*/
+}
+
+.balloon_l .faceicon{
+  margin-right:25px;
+}
+
+/* コメント他人用 */
+.says {
+  display: flex;
+  flex-wrap: wrap;
+  position: relative;
+  padding: 17px 13px 15px 18px;
+  border-radius: 12px;
+  background: #fed6e3;/*色は任意*/
+  box-sizing:border-box;
+  margin:0 !important;
+  line-height:1.5;
+/*   align-items: center; */
+}
+.says p{
+  margin:8px 0 0 !important; 
+  min-width: 50%;
+}
+.says p:first-child{
+  margin-top:0 !important;
+}
+.says:after {
+  content: "";
+  position: absolute;
+  border: 10px solid transparent;
+/*   margin-top:-3px;  */
+}
+.balloon_l .says:after {
+  left: -26px;
+  border-right: 22px solid #fed6e3;
+}
+
+
+/* コメント本人用 */
+.says2 {
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+    padding: 17px 13px 15px 18px;
+    border-radius: 12px;
+    background: #affdfd;/*色は任意*/
+    box-sizing:border-box;
+    margin:0 !important;
+    line-height:1.5;
+  /*   align-items: center; */
+  }
+  .says2 p{
+    margin:8px 0 0 !important; 
+    min-width: 50%;
+  }
+  .says2 p:first-child{
+    margin-top:0 !important;
+  }
+  .says2:after {
+    content: "";
+    position: absolute;
+    border: 10px solid transparent;
+  /*   margin-top:-3px;  */
+  }
+  .balloon_l .says2:after {
+    left: -26px;
+    border-right: 22px solid #affdfd;
+  }
+
+/* ユーザーアイコン */
+.icon
+{
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    border: 3px solid #999;
+}
+
+
+/* いいね */
+.btn-good {
+    background-color: #F0DDB6ff;
+    border-radius: 50%;
+    line-height: 130px;
+    width: 150px;
+    height: 150px;
+    padding: 0;
+    border: solid 10px #d4ba9b;
+    
+  }
+
+.favo-yet{
+    font-size: 64px;
+    color: skyblue;
+}
+
+.favo-yet:hover{
+    color: red;
+}
+
+.favo-already{
+    font-size: 64px;
+    color: #FF66CC;
+}
+
+.favo-already:hover{
+    color: blue;
+}

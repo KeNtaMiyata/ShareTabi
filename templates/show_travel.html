@@ -1,70 +1,146 @@
 {% extends "layout.html" %}
 
+{% block head_css %}
+<link href="/static/stylesheet/show_travel.css" rel="stylesheet">
+{% endblock %}
+
 {% block title %}
     Travels
 {% endblock %}
 
 {% block main %}
-    {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-            {% for category, message in messages %}
-                <li class="{{ category }}">{{ message }}</li>
-            {% endfor %}
-        {% endif %}
-    {% endwith %}
-
-    <p>{{ travel_user.name }}</p>
-    <p>{{ travel.created_at}}</p>
-    <p>{{ travel.title }}</p>
-    <p>{{ travel.date }}</p>
-    <p>{{ travel.location }}</p>
-    <p>{{ travel.report }}</p>
-
-
-    <img src="../static/images/post/{{ travel.user_id }}_{{ travel.id }}.png" width="100" height="100" alt onerror="this.onerror = null; this.src='';"><br>
-    
-    <div>
-        <table>
-            <thead>
-    
-            </thead>
-            <tbody>
-                {% for comment in comments %}
-                <tr>
-                    <td><a href="/users/{{ comment.user_id }}">{{ comment.user_name }}</a></td>
-                    <td>{{ comment.body }}</td>
+<div class="container-fluid content back">
+    <div class="row mx-auto py-5">
+        <div class="col-8">
+            <div class="cork mx-auto" >
+                <div class="row">
+                    <div class="col-6 ms-3">
+                        <div class="col-1 mx-auto">
+                            <div class="circle btn" style="z-index:10000"></div>    
+                        </div>
+                        <div class="image mx-auto">
+                            <img src="../static/images/post/{{ travel.user_id }}_{{ travel.id }}.png" alt onerror="this.onerror = null; this.src='';"><br>
+                        </div>
+                        
+                        <!-- ユーザーが投稿者本人だったら、編集ボタンと削除ボタンを表示 -->
+                        {% if travel.user_id == current_user.id %}
+                        <div class="mt-4">
+                            <a class="btn btn-outline-success col-5 ms-3" href="/travels/{{ travel.id }}/edit"><i class="far fa-edit me-1"></i>Edit</a>
+                            <a class="btn btn-outline-danger col-5 offset-1" href="/travels/{{ travel.id }}/delete" onclick="return confirm_delete()"><i class="fas fa-trash-alt me-1"></i>Delete</a>
+                        </div>
+                        {% endif %}
+                    </div>
                     
-                    <!-- ユーザーがコメント本人だったら、削除ボタンを表示 -->
-                    {% if comment.user_id == current_user.id %}
-                    <td>
-                        <a href="/travels/{{ travel.id }}/comments/{{ comment.id }}/delete">コメント削除</a>
-                    </td>
-                    {% endif %}
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+                    <div class="col-5 ms-5 mt-3">
+                        <ul class="notes mx-auto">
+                            <li>
+                                <p>{{ travel.title }}</p>
+                                <p>by {{ travel_user.name }}</p>
+                            </li>
+                            <li><p>Tabi date ： {{ travel.date | show_datetime }}</p></li>
+                            <li><p>Tabi location ：＠ {{ travel.location }}</p></li>
+                            <li>                        
+                                <p>投稿日：{{ travel.created_at | show_datetime}}</p>
+                            </li>
+                        </ul>
+                        <ul class="notes">
+                            <li class="mt-5"><p>{{ travel.report }}</p></li>
+                        </ul>
+                    </div>
+                </div> 
+            </div>
+        </div>
 
+        <!-- コメント欄 -->
+        <div class="box col-4">
+            <div class="offset-1">
+                <h4>Comment</h4>
+            </div>
+
+            <form class="form-inline my-4" action="/travels/{{ travel.id }}/comments" method="post">
+                <div class="form-group col-8 offset-1">
+                    <textarea class="form-control" id="InputAsk" name="body" type="text" rows="1"></textarea>
+                </div>
+                <button class="btn btn-primary col-2" type="submit"><i class="fas fa-paper-plane"></i></button>
+            </form>
+            
+            <div class="hor">
+                <hr>
+            </div>
+
+            <div class="comment mt-4">
+                <table class="w-100">
+                    <thead>
+                        <tr>
+                            <th style="width: 80%"></th>
+                            <th style="width: 20%"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for comment, user in comment_data %}
+                        <tr>
+                            <td>
+                                <!-- ユーザーがコメント本人だったら、コメントの色を変える -->
+                                {% if comment.user_id == current_user.id %}
+                                <div class="balloon_l">
+                                    <ul>
+                                        <li class="ms-2">{{ comment.user_name }}</li>
+                                        <li>
+                                            <div>
+                                                <img src="../static/images/icon/{{ user.icon }}.png" class="icon">
+                                            </div>
+                                        </li>
+                                    </ul>
+                                    <div class="ms-3 my-auto w-100">
+                                        <p class="says2 w-100">{{ comment.body }}</p>
+                                    </div>
+                                </div>
+                                {% else %}
+                                <div class="balloon_l">
+                                    <ul>
+                                        <li class="ms-2">{{ comment.user_name }}</li>
+                                        <li>
+                                            <div>
+                                                <img src="../static/images/icon/{{ user.icon }}.png" class="icon">
+                                            </div>
+                                        </li>
+                                    </ul>
+                                    <div class="ms-3 my-auto w-100">
+                                        <p class="says w-100">{{ comment.body }}</p>
+                                    </div>
+                                </div>
+                                {% endif %}
+                            </td>
+                            <!-- ユーザーがコメント本人だったら、削除ボタンを表示 -->
+                            {% if comment.user_id == current_user.id %}
+                            <td class="ps-3">
+                                <a class="btn btn-danger " href="/travels/{{ travel.id }}/comments/{{ comment.id }}/delete" onclick="return confirm_delete()"><i class="fas fa-trash-alt fa-lg "></i></a>
+                            </td>
+                            {% endif %}
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-3 offset-1">
+            <button class="cork btn-good">
+                <!-- いいね -->
+                {% if user_favorite_count == 0 %}
+                <a class="favo-yet" href="/travels/{{ travel.id }}/favorites"><i class="fas fa-heart"></i>{{ favorites_count }}</a>
+                {% else %}
+                <a class="favo-already" href="/travels/{{ travel.id }}/favorites"><i class="fas fa-heart"></i>{{ favorites_count }}</a>
+                {% endif %}
+            </button>
+        </div>
+        
+        <div class="col-3 offset-1">
+            <a href="http://twitter.com/share" 
+            class="twitter-share-button"
+            data-text="{{ travel.report }}"
+            data-count="horizotal">ツイート
+            </a>
+        </div>
     </div>
-
-    <!-- コメント -->
-    <form action="/travels/{{ travel.id }}/comments" method="post">
-        <textarea class="form-control mx-auto w-auto" name="body" type="text" rows="3"></textarea>
-        <button class="form-control mx-auto w-auto" type="submit">コメントを投稿する</button>
-    </form>
-
-    <!-- いいね -->
-    {% if user_favorite_count == 0 %}
-    <a href="/travels/{{ travel.id }}/favorites">♡{{ favorites_count }}</a>
-    {% else %}
-    <a href="/travels/{{ travel.id }}/favorites">♡いいね済み{{ favorites_count }}</a>
-    {% endif %}
-
-
-    <!-- ユーザーが投稿者本人だったら、編集ボタンと削除ボタンを表示 -->
-    {% if travel.user_id == current_user.id %}
-    <p><a href="/travels/{{ travel.id }}/edit">edit</a></p>
-    <p><a href="/travels/{{ travel.id }}/delete">delete</a></p>
-    {% endif %}
-
+</div>
 {% endblock %}

@@ -1,9 +1,345 @@
 {% extends "layout.html" %}
 
+{% block head_css %}
+<link href="/static/stylesheet/styles.css" rel="stylesheet">
+{% endblock %}
+
 {% block title %}
-    Top page
+    あなたの旅の軌跡をシェアしよう
 {% endblock %}
 
 {% block main %}
-<h1>Hello ShareTabi</h1>
+	<div>
+		<div id="top">
+			<div id="wrapper">
+				<div id="sidebar">
+					<div id="sidebarWrap">
+						<h1><img src="../static/images/top/logo.png" width="87" height="25" alt="logo"></h1>
+						<nav id="mainnav">
+							<p id="menuWrap"><a id="menu"><span id="menuBtn"></span></a></p>
+							<div class="panel">
+								<ul>
+									<li><a href="#top">TOP</a></li>
+									<li><a href="#sec01">LOGIN</a></li>
+									<li><a href="#sec02">SIGNUP</a></li>
+									<li><a href="#sec03">GALLERY</a></li>
+									<li><a href="#sec04">FEED</a></li>
+									<li><a href="#sec05">ABOUT US</a></li>
+								</ul>
+								<ul id="sns">
+									<li><a href="#" target="_blank"><img src="../static/images/top/iconFb.png" width="20" height="20" alt="FB"></a></li>
+									<li><a href="#" target="_blank"><img src="../static/images/top/iconTw.png" width="20" height="20" alt="twitter"></a></li>
+									<li><a href="#" target="_blank"><img src="../static/images/top/iconInsta.png" width="20" height="20" alt="Instagram"></a></li>
+									<li><a href="#" target="_blank"><img src="../static/images/top/iconYouTube.png" width="20" height="20" alt="You Tube"></a></li>
+								</ul>
+							</div>
+						</nav>
+					</div>
+				</div>
+				
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-10">
+							<div class="top text-center">
+								<h1 >Hello ShareTabi</h1>
+								<h2>あなたの旅の軌跡をシェアしよう</h2>
+							</div>
+							<!-- <p id="mainImg"><img src="../static/images/top/mainImg.jpg" alt=""></p> -->
+						</div>
+						<div class="col-4">
+							<section id="sec01">
+								<header>
+									<h2><span>LOGIN</span></h2>
+								</header>
+								<div class="innerS">
+									ログインはこちらから
+									<a href="/login" class="btn btn-outline-primary">Log in</a> 
+								</div>
+							</section>
+						</div>
+						<div class="col-4">
+							<section id="sec02">
+								<header>
+									<h2><span>SIGNUP</span></h2>
+								</header>
+								<div class="innerS">
+									新規登録はこちらから
+								</div>
+								<a href="/register" class="btn btn-outline-primary">Sign up</a>  
+							</section>
+						</div>
+					</div>
+						<ul id="SIGNUP">
+							<li><img src="../static/images/top/photo01.jpg" width="360" height="350" alt=""></li>
+							<li><img src="../static/images/top/photo02.jpg" width="360" height="350" alt=""></li>
+							<li><img src="../static/images/top/photo03.jpg" width="360" height="350" alt=""></li>
+							<li><img src="../static/images/top/photo04.jpg" width="360" height="350" alt=""></li>
+							<li><img src="../static/images/top/photo05.jpg" width="360" height="350" alt=""></li>
+							<li><img src="../static/images/top/photo06.jpg" width="360" height="350" alt=""></li>
+							<li class="full"><img src="../static/images/top/photo07.jpg" width="1080" height="695" alt=""></li>
+							<li><img src="../static/images/top/photo08.jpg" width="360" height="350" alt=""></li>
+							<li><img src="../static/images/top/photo09.jpg" width="360" height="350" alt=""></li>
+							<li><img src="../static/images/top/photo10.jpg" width="360" height="350" alt=""></li>
+							<li><img src="../static/images/top/photo11.jpg" width="360" height="350" alt=""></li>
+							<li><img src="../static/images/top/photo12.jpg" width="360" height="350" alt=""></li>
+							<li><img src="../static/images/top/photo13.jpg" width="360" height="350" alt=""></li>
+						</ul>
+
+					<section id="sec03">
+						<header>
+							<h2><span>GALLERY</span></h2>
+						</header>
+						<div class="inner">
+							<ul class="col4">
+								<li>
+									<p class="img"><img src="../static/images/top/logo01.png" width="168" height="168" alt=""></p>
+									<p>皆さんが投稿してくださった素敵な画像です。</p>
+								</li>
+								<li>
+									<p class="img"><img src="../static/images/top/logo02.png" width="168" height="168" alt=""></p>
+									<p>皆さんが投稿してくださった素敵な画像です。</p>
+								</li>
+								<li>
+									<p class="img"><img src="../static/images/top/logo03.png" width="168" height="168" alt=""></p>
+									<p>皆さんが投稿してくださった素敵な画像です。</p>
+								</li>
+								<li>
+									<p class="img"><img src="../static/images/top/logo04.png" width="168" height="168" alt=""></p>
+									<p>皆さんが投稿してくださった素敵な画像です。</p>
+								</li>
+							</ul>
+						</div>
+					</section>
+					<!-- // GALLERY -->
+					<!-- FEED -->
+					<section id="sec04">
+						<header>
+							<h2><span>FEED</span></h2>
+						</header>
+						<div class="inner">
+							<div class="article">
+								<img id="pic" src="photo01.jpg" width="200" height="200">
+
+								<script>
+
+									'use strict';
+									
+									const img = ["images/photo01.jpg", "images/photo02.jpg", "images/photo03.jpg"];
+									
+									let count = -1;
+									
+									picChange(); // 関数を実行
+									
+									function picChange() {
+									
+									count++;
+									
+									// カウントが最大になれば配列を初期値に戻すため「0」を指定する
+									if (count == img.length) count = 0;
+									
+									// 画像選択
+									document.getElementById("pic").src = img[count];
+									
+									// 1秒ごとに実行
+									setTimeout("picChange()", 1000);
+									
+									}
+									
+								</script>
+
+								<br>
+								新規投稿をもっと見る
+								<br>
+								皆さんの素敵な投稿がたくさんあります。
+								<br>
+
+								<script>
+
+									'use strict';
+									
+									const img = ["images/photo01.jpg", "images/photo02.jpg", "images/photo03.jpg"];
+									
+									let count = -1;
+									
+									picChange(); // 関数を実行
+									
+									function picChange() {
+									
+									count++;
+									
+									// カウントが最大になれば配列を初期値に戻すため「0」を指定する
+									if (count == img.length) count = 0;
+									
+									// 画像選択
+									document.getElementById("pic").src = img[count];
+									
+									// 1秒ごとに実行
+									setTimeout("picChange()", 1000);
+									
+									}
+									
+								</script>
+
+								<br>
+								新規投稿をもっと見る
+								<br>
+								皆さんの素敵な投稿がたくさんあります。
+								<br>
+
+								<script>
+
+									'use strict';
+									
+									const img = ["images/photo01.jpg", "images/photo02.jpg", "images/photo03.jpg"];
+									
+									let count = -1;
+									
+									picChange(); // 関数を実行
+									
+									function picChange() {
+									
+									count++;
+									
+									// カウントが最大になれば配列を初期値に戻すため「0」を指定する
+									if (count == img.length) count = 0;
+									
+									// 画像選択
+									document.getElementById("pic").src = img[count];
+									
+									// 1秒ごとに実行
+									setTimeout("picChange()", 1000);
+									
+									}
+									
+								</script>
+
+								
+
+									<script>
+
+										'use strict';
+										
+										const img = ["images/photo01.jpg", "images/photo02.jpg", "images/photo03.jpg"];
+										
+										let count = -1;
+										
+										picChange(); // 関数を実行
+										
+										function picChange() {
+										
+										count++;
+										
+										// カウントが最大になれば配列を初期値に戻すため「0」を指定する
+										if (count == img.length) count = 0;
+										
+										// 画像選択
+										document.getElementById("pic").src = img[count];
+										
+										// 1秒ごとに実行
+										setTimeout("picChange()", 1000);
+										
+										}
+										
+										</script>
+
+										<script>
+
+									'use strict';
+									
+									const img = ["images/photo01.jpg", "images/photo02.jpg", "images/photo03.jpg"];
+									
+									let count = -1;
+									
+									picChange(); // 関数を実行
+									
+									function picChange() {
+									
+									count++;
+									
+									// カウントが最大になれば配列を初期値に戻すため「0」を指定する
+									if (count == img.length) count = 0;
+									
+									// 画像選択
+									document.getElementById("pic").src = img[count];
+									
+									// 1秒ごとに実行
+									setTimeout("picChange()", 1000);
+									
+									}
+									
+									</script>
+
+									<script>
+
+										'use strict';
+										
+										const img = ["images/photo01.jpg", "images/photo02.jpg", "images/photo03.jpg"];
+										
+										let count = -1;
+										
+										picChange(); // 関数を実行
+										
+										function picChange() {
+										
+										count++;
+										
+										// カウントが最大になれば配列を初期値に戻すため「0」を指定する
+										if (count == img.length) count = 0;
+										
+										// 画像選択
+										document.getElementById("pic").src = img[count];
+										
+										// 1秒ごとに実行
+										setTimeout("picChange()", 1000);
+										
+										}
+										
+										</script>
+
+								<img src="../static/images/top/photo14.jpg" width="370" height="224" alt="">
+								<p>皆さんの新規投稿の一覧はこちらです。</p>
+							</div>
+							<div class="article">
+								<img src="../static/images/top/photo15.jpg" width="370" height="224" alt="">
+								<p>皆さんの新規投稿の一覧はこちらです。</p>
+							</div>
+						</div>
+					</section>
+					<!-- // FEED -->
+					<!-- COMPANY -->
+					<section id="sec05">
+						<header>
+							<h2><span>COMPANY</span></h2>
+						</header>
+						<div class="inner">
+							<ul class="col2">
+								<li>
+									<p>〒103-1234<br>見本県見本市仮区見本町1-3-5</p>
+									<p>TEL 01234-567-8901</p>
+									<p>e-Mail info@example.com</p>
+									<p>営業時間 10:00〜20:00（水曜定休）</p>
+									<p>※都合により休業する場合がございます</p>
+								</li>
+								<li>
+									<div id="map">
+										<!-- GOOGLE MAP -->
+										<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3198.5937927089367!2d136.92980931491988!3d36.70829797996758!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x5ff781ec5af4ca3f%3A0x2ade3e8e4c2801b8!2z56aP5bKh6aeF!5e0!3m2!1sja!2sus!4v1478313402186" allowfullscreen></iframe>
+										<!-- // GOOGLE MAP -->
+									</div>
+								</li>
+							</ul>
+						</div>
+					</section>
+					<!-- // COMPANY -->
+
+					<footer id="footer">
+						Copyright(c) 2022 ShareTabi. All Rights Reserved.
+					</footer>
+
+				</div>
+			</div>
+
+		</div>
+	</div>
+
 {% endblock %}

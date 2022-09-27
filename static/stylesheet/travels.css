@@ -1,0 +1,317 @@
+/* reset */
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+address,caption,cite,code,dfn,em,strong,th,var{font-style:normal;}
+ul{list-style:none;}
+table{border-collapse:collapse;border-spacing:0;}
+caption,th{text-align:left;}
+q:before,q:after{content:'';}
+object,embed{vertical-align:top;}
+legend{display:none;}
+img,abbr,acronym,fieldset{border:0;}
+
+a{
+	text-decoration: none;
+}
+
+.content {
+    min-height: 800px;
+    height: auto;
+    border-radius: 5px;
+    box-shadow: 0 9px 50px hsla(20, 67%, 75%, 0.31);
+    background-image: url(../images/back/world.jpg);
+    background-size: cover;
+    background-position: center;
+}
+
+select.imgSel
+{
+    background-repeat: no-repeat;
+    background-position: 2px 0; /* 背景画像を若干右に移動 */
+    padding-left: 60px; /* 画像.width + α background-position */
+    height: 32px; /* 画像.height + 2 (borderの分を足す) */
+    font-size: 22px;  /* 画像.height - 3 */
+}
+
+_::-webkit-full-page-media, _:future, select.imgSel {
+    -webkit-appearance: button;
+    appearance: button;
+}
+
+.cont
+{
+    display: flex;
+}
+
+.body /* 本体 */
+{
+    flex: 1 1 80%;
+    text-align:center;
+}
+
+.sidebar /* サイドバー */
+{
+    color: #252537;
+
+    background-image: -webkit-linear-gradient(110deg, #e9defa 0%, #fbfcdb 100%);
+    background-image: linear-gradient(-20deg, #e9defa 0%, #fbfcdb 100%);
+    -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
+
+    position: sticky; /* 本体をスクロールしても画面に固定される */
+    top: 80px;
+    height: 600px;
+    flex: 1 1 20%;
+
+    text-align:center;
+    margin-left:10px; /*サイドバーとメインコンテンツの間に隙間をあけた*/
+
+}
+
+.sidebar{
+    margin:2em 0;
+    padding: 0.25em 1em;
+    border: solid 2px #ffcb8a;
+    border-radius: 3px 0 3px 0;
+}
+.sidebar:before,.sidebar:after
+{
+    content: '';
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    border: solid 3px #DBB400;
+    border-radius: 50%;
+}
+.sidebar:after {
+    top:-12px;
+    left:-12px;
+}
+.sidebar:before {
+    bottom:-12px;
+    right:-12px;
+}
+.sidebar p {
+    margin: 0; 
+    padding: 0;
+}
+
+.favo-1, .favo-1:hover{
+    color: #DBB400;
+}
+
+.favo-2, .favo-2:hover{
+    color: #B9C3C9;
+}
+
+.favo-3, .favo-3:hover{
+    color: #C08D5E;
+}
+
+.travel_icon
+{
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    border: 3px solid #fff;
+    display: inline-block;
+}
+
+.select-icon
+{
+    text-align:center;
+}
+  
+.icon
+{
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    border: 3px solid #999;
+}
+
+.cork{
+	background-image: url(../images/back/cork.jpg);
+    background-size: cover;
+    background-position: center;
+    padding: 15px 0;
+    border: outset 10px #d4ba9b;
+ }
+
+.circle {
+    position: relative;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    padding: 0;
+    background-color: yellow;
+    border: solid 1.5px #fff;
+    z-index:10000
+}
+
+/* .g-red {
+    background-color: red;
+}
+
+.g-blue {
+    background-color: blue;
+}
+
+.g-pink {
+    background-color: pink;
+}
+
+.g-yellow {
+    background-color: yellow;
+}
+
+.g-green {
+    background-color: green;
+} */
+
+.image {
+	position: relative;
+    width: 100%;
+    height: auto;
+    max-height: 200px;
+    background-color: #E3FDF5;
+    overflow:hidden;
+    margin: -15px 0 15px 0;
+}
+
+.image::after {
+	content: '';
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: calc(100% + 10px);
+	height: calc(100% + 10px);
+	border-image-source: repeating-linear-gradient(45deg, #fff, #fff 3px, rgba(0 0 0 / 0) 0, rgba(0 0 0 / 0) 6px);
+	border-image-slice: 20;
+	border-image-repeat: round;
+	border-style: solid;
+	border-width: 20px;
+}
+
+.image img{
+    width: calc(100% - 20px);
+	height: auto;   
+}
+
+.notes{
+    padding: 0;
+}
+
+.notes li {
+    position: relative;
+    width: 90%;
+    min-height: 50px;
+    margin: 0 auto;
+    margin-top: 20px;
+    padding: 25px 15px 2px 15px;
+    background: #f1f3a2;
+    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(247,247,210,1)), to(rgba(240,242,155,1)));
+    background: -moz-linear-gradient(top, rgba(247,247,210,1), rgba(240,242,155,1));
+    -webkit-box-shadow: 0 2px 12px rgba(0,0,0,.5);
+    -moz-box-shadow: 0 2px 12px (rgba(0,0,0.5));
+    box-shadow: 0 1px 2px #000;
+    -webkit-transform: rotate(-.5deg);
+    -moz-transform: rotate(-.5deg);
+    -o-transform: rotate(-.5deg);
+}
+ 
+.notes li:nth-child(even) {
+    -webkit-transform: rotate(.5deg);
+    -moz-transform: rotate(.5deg);
+    -o-transform: rotate(.5deg);
+}
+
+
+.notes li p {
+    text-align: center;
+    font: normal normal normal 2em/1.2em 'Reenie Beanie', Helvetica, Arial, sans-serif;
+    color: #000;
+    font-size: medium;
+    text-shadow: white 1px 1px 0px;
+    overflow:hidden;
+}
+
+.notes li:nth-child(even){
+    margin-top: 20px;
+}
+ 
+.notes li::before {
+    content: ' ';
+    display: block;
+    position: absolute;
+    left: 40px;
+    top: -15px;
+    width: 75px;
+    height: 25px;
+    z-index: 2;
+    background-color: rgba(243,245,228,0.5);
+    border: 2px solid rgba(255,255,255,0.5);
+    -webkit-box-shadow: 0 0 5px #888;
+    -moz-box-shadow: 0 0 5px #888;
+    box-shadow: 2px 2px 2px #000;
+    -webkit-transform: rotate(-6deg);
+    -moz-transform: rotate(-6deg);
+    -o-transform: rotate(-6deg);
+}
+ 
+.notes li:nth-child(even)::before {
+    left: 50px;
+    -webkit-transform: rotate(6deg);
+    -moz-transform: rotate(6deg);
+    -o-transform: rotate(6deg);
+}
+
+
+
+
+/* 検索ボックス */
+.search{
+    position:relative;
+    max-width:300px;	
+    margin-bottom:20px;
+}
+
+.search-box{
+    height:50px;
+    width: 300px;
+    padding:0 10px; 
+    position:absolute; 
+    left:0;
+    top:0; 
+    border-radius:25px;
+    outline:0;
+    background:#eee;
+}
+
+.search-btn{
+    height:50px;
+    width:50px;	
+    position:absolute; 
+    left: 275px;  /* search-box の width - search-box の border-radius   */
+    top:0;
+    background:#7fbfff;
+    color:#fff;
+    border:none;
+    border-radius:0 25px 25px 0;
+}
+
+.search-btn .fa-search{
+    font-size:20px;	
+    position:absolute;
+    top:30%;
+    left:30%;	
+}
+
+.search-btn:hover{
+    color:#888;
+}
