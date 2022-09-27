@@ -10,8 +10,8 @@
 </form>
 
 <form action="/visited_location" method="post">
-    <input type="serch" name="location_name" value="{{ location }}">
-    <button type="submit">検索</button>
+    <input class="form-control mx-auto w-auto" type="serch" name="location_name" value="{{ location }}">
+    <button class="form-control mx-auto w-auto" type="submit">検索</button>
 </form>
 <hr>
 {% if message %}
@@ -24,7 +24,7 @@
         </tr>
         {% for loc in locations %}
             <tr>
-                <td><input type="submit" id="location" name="location" value="{{ loc['description'] }}"></td>
+                <td><input class="form-control mx-auto w-auto" type="submit" id="location" name="location" value="{{ loc['description'] }}"></td>
             </tr>
         {% endfor %}
     </table>
