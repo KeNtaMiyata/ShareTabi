@@ -222,10 +222,13 @@ def new():
 
 
     else:
-        location = request.args.get['var1']
-        print(location)
-        return render_template("new.html", location)
+        return render_template("new.html")
     
+
+@app.route("/new_second", methods=["POST"])
+def new_loc():
+    location=request.form.get("location")
+    return render_template("new.html", location=location)
 
 
 # 投稿一覧を表示するページ
