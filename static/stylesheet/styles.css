@@ -691,3 +691,20 @@ _::-webkit-full-page-media, _:future, select.imgSel {
 	  transform: translateX(5%);
 	}
   }
+
+  .out{
+
+  }
+
+  .in{
+	margin: 0 55px 0 -55px;
+  }
+
+  .up{
+	margin-top: -50px;
+	margin-bottom: 50px;
+  }
+  .down{
+	margin-top: 50px;
+	margin-bottom: -50px;
+  }
