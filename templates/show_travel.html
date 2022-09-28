@@ -123,7 +123,7 @@
                 </table>
             </div>
         </div>
-        <div class="col-3 offset-1">
+        <div class="col-1 offset-1 my-auto">
             <button class="cork btn-good">
                 <!-- いいね -->
                 {% if user_favorite_count == 0 %}
@@ -133,14 +133,20 @@
                 {% endif %}
             </button>
         </div>
+        <div class="col-2 ms-4 my-auto">
+            <img src="../static/images/logo/logo-sukashi.png" alt="logo" width="250" height="250">          
+        </div>
         
-        <div class="col-3 offset-1">
+        <div class="col-1 ms-4 my-auto">
             <a href="http://twitter.com/share" 
-            class="twitter-share-button"
-            data-text="{{ travel.report }}"
+            data-text="{{ travel.report }}" 
             data-count="horizotal" 
-            data-size="large">ツイート
+            data-size="large"><i class="fab fa-twitter-square size"></i>
             </a>
+        </div>
+
+        <div class="col-2 ms-4 my-auto">
+            <img src="../static/images/logo/logo-sukashi.png" alt="logo" width="250" height="250">          
         </div>
     </div>
 </div>

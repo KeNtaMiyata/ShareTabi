@@ -311,3 +311,7 @@ a{
 .favo-already:hover{
     color: blue;
 }
+
+.size{
+    font-size:10em; /*1.5倍にする*/
+}

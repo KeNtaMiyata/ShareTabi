@@ -27,15 +27,22 @@
                     </button>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav">
-                            <li class="nav-item"><a class ="navbar-brand" href="/">ShareTabi</a></li>
-                            <li class="nav-item"><a class ="nav-link" href="/">Home</a></li>
-                            <li class="nav-item"><a class ="nav-link" href="/login">Log in</a></li>
-                            <li class="nav-item"><a class ="nav-link" href="/register">Sign up</a></li>
+                            <li class="nav-item">
+                                <img src="../static/images/logo/logo-sukashi.png" alt="logo" width="50" height="50">
+                                <a class ="navbar-brand" href="/">ShareTabi
+                                <img src="../static/images/logo/logo-sukashi.png" alt="logo" width="50" height="50">
+                                </a>
+                            </li>
+                            <li class="nav-item"><a class ="nav-link ms-5" href="/"><i class="fas fa-home"></i>Home</a></li>
                             {% if current_user.is_authenticated %}
-                            <li class="nav-item"><a class ="nav-link" href="/new">New Tabi</a></li>
-                            <li class="nav-item"><a class ="nav-link" href="/travels">All Tabi</a></li>
-                            <li class="nav-item"><a class ="nav-link" href="/users">Users</a></li>
-                            <li class="nav-item"><a class ="nav-link" href="https://omiyadata.com/jp/" target="_blank">お土産を「おみや」で調べる</a></li>
+                            <li class="nav-item"><a class ="nav-link" href="/new"><i class="fas fa-plane-departure"></i>New Tabi</a></li>
+                            <li class="nav-item"><a class ="nav-link" href="/travels"><i class="fas fa-globe"></i>All Tabi</a></li>
+                            <li class="nav-item"><a class ="nav-link" href="/users"><i class="fas fa-users"></i>Users</a></li>
+                            <li class="nav-item"><a class ="nav-link" href="https://omiyadata.com/jp/" target="_blank"><i class="fas fa-gift"></i>お土産を「おみや」で調べる</a></li>
+                            <li class="nav-item"><a class ="nav-link" href="/logout"><i class="fas fa-sign-out-alt"></i>Log out</a></li>
+                            {% else %}
+                            <li class="nav-item"><a class ="nav-link" href="/login"><i class="fas fa-sign-in-alt"></i>Log in</a></li>
+                            <li class="nav-item"><a class ="nav-link" href="/register"><i class="fas fa-user-plus"></i>Sign up</a></li>
                             {% endif %}
                         </ul>
                     </div>
