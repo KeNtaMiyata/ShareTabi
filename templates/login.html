@@ -1,13 +1,35 @@
 {% extends "layout.html" %}
 
+{% block head_css %}
+<link href="/static/stylesheet/login.css" rel="stylesheet">
+{% endblock %}
+
+{% block head %}
+<link href="/static/stylesheet/login.css" rel="stylesheet">
+{% endblock %}
+
 {% block title %}
     ログイン
 {% endblock %}
 
 {% block main %}
+<div class="form-wrapper">
+    <h1>Log In</h1>
     <form action="/login" method="post">
-        <input class="form-control mx-auto w-auto" id="username" name="username" placeholder="ユーザー名" type="text">
-        <input class="form-control mx-auto w-auto" id="password" name="password" placeholder="パスワード" type="password">            
-        <button class="btn btn-primary" type="submit">ログイン</button>
+      <div class="form-item">
+          <label for="name"></label>
+          <input autocomplete="off" autofocus type="name" name="username" required="required" placeholder="新規ユーザ名">
+      </div>
+      <div class="form-item">
+        <label for="password"></label>
+        <input type="password" name="password" required="required" placeholder="パスワード">
+      </div>
+      <div class="button-panel">
+        <input type="submit" class="button" title="Sign In" value="Sign In">
+      </div>
     </form>
+    <div class="form-footer">
+      <p><a href="/register">アカウントを持っていない方はこちら</a></p>
+    </div>
+  </div>
 {% endblock %}

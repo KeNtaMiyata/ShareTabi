@@ -13,6 +13,7 @@ import googlemaps
 
 # アップロードされる拡張子の制限
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'gif'])
+from helpers import show_datetime, allowed_file
 
 app = Flask(__name__)
 
@@ -29,6 +30,8 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False # SADeprecationWarning: SQL
 # app.config['GOOGLEMAPS_KEY'] = "AIzaSyDDJgw-Gp8YTC6it7DdakobT-rIfrVXzmo" 
 googleapikey = 'AIzaSyDDJgw-Gp8YTC6it7DdakobT-rIfrVXzmo'
 client = googlemaps.Client(key=googleapikey)
+# html でshow_datetimeを使えるようにする
+app.jinja_env.filters["show_datetime"] = show_datetime
 
 db = SQLAlchemy(app)
 
@@ -43,7 +46,8 @@ class User(UserMixin, db.Model):
     name = db.Column(db.String(15), nullable=False, unique=True)
     password = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(25), nullable=False, unique=True)
-    created_at = db.Column(db.DateTime, nullable=False, default=datetime.datetime.now(pytz.timezone('Asia/Tokyo')))
+    icon = db.Column(db.Integer, nullable=False)
+    created_at = db.Column(db.DateTime, nullable=False, default=datetime.date.today())
     travels = db.relationship('Travel', backref='user', lazy=True)
     comments = db.relationship('Comment', backref='user', lazy=True)
     favorites = db.relationship('Favorite', backref='user', lazy=True)
@@ -52,10 +56,10 @@ class User(UserMixin, db.Model):
 class Travel(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(50), nullable=False)
-    date = db.Column(db.DateTime, nullable=False, default=datetime.datetime.now(pytz.timezone('Asia/Tokyo')))
+    date = db.Column(db.DateTime, nullable=False, default=datetime.date.today())
     location = db.Column(db.String(50), nullable=True)
     report = db.Column(db.String(500), nullable=False)
-    created_at = db.Column(db.DateTime, nullable=False, default=datetime.datetime.now(pytz.timezone('Asia/Tokyo')))
+    created_at = db.Column(db.DateTime, nullable=False, default=datetime.date.today())
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     comments = db.relationship('Comment', backref='travel', lazy=True)
     favorites = db.relationship('Favorite', backref='travel', lazy=True)
@@ -75,15 +79,15 @@ class Favorite(db.Model):
     travel_id = db.Column(db.Integer, db.ForeignKey('travel.id'), nullable=False)
 
 
-# 画像について
-def allowed_file(filename):
-    # .があるかどうかのチェックと、拡張子の確認
-    # OKなら１、だめなら0
-    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-
-
-
 # 以下ルーティングとアクション
+
+# errorのとき
+# unauthorized error のときトップページに戻る
+@app.errorhandler(401)
+def unauthorized(error):
+    flash('ログインをしてください', 'warning')
+    return render_template("login.html")
+
     
 # @login_required : ログイン後のみ付けたい機能だけ
 @login_manager.user_loader
@@ -141,32 +145,27 @@ def register():
         password = request.form.get('password')
         confirmation = request.form.get('confirmation')
         email = request.form.get('email')
+        icon = int(request.form.get('icon'))
         
         # 空欄チェック
         if not username:
-
             flash('ユーザー名を入力してください', 'warning')
             return render_template("register.html")
         
         elif not email:
-            
             flash('メールアドレスを入力してください', 'warning')
             return render_template("register.html")
 
         elif not password:
-
             flash('パスワードを入力してください', 'warning')
             return render_template("register.html")
- 
 
         elif not confirmation:
-
             flash('パスワードをもう一度入力してください', 'warning')
             return render_template("register.html") 
 
         # 同じパスワードが入力されているか
         if password != confirmation:
-
             flash('パスワードが一致しません', 'warning')
             return render_template("register.html")
  
@@ -178,7 +177,7 @@ def register():
             
         except:
             # 記入情報を登録する
-            user = User(name=username, password=generate_password_hash(password), email=email)
+            user = User(name=username, password=generate_password_hash(password), email=email, icon=icon)
             db.session.add(user)
             db.session.commit()
             
@@ -196,7 +195,7 @@ def new():
     if (request.method == "POST"):
 
         title = request.form.get("title")
-        date = datetime.datetime.strptime(request.form.get("date"), '%Y-%m-%d')
+        date = datetime.datetime.strptime(request.form.get("date"), '%Y-%m-%d').date()
         location = request.form.get("location")
         report = request.form.get("report")
         user_id = current_user.id
@@ -232,25 +231,71 @@ def new_loc():
 
 
 # 投稿一覧を表示するページ
-@app.route("/travels", methods=["GET"])
+@app.route("/travels", methods=["GET", "POST"])
 @login_required
 def travels():
-    # if (request.method == "GET"):
-    travels = Travel.query.all()
-    return render_template("travels.html", travels=travels)
+    travels = Travel.query.all() # 全ての投稿
 
+    list = [[]] # いいね数とidを入れるリスト
+
+    for i in range(len(travels)): # いいね数をカウントするループ
+        favorites = Favorite.query.filter(Favorite.travel_id == (i + 1)).all()
+        favorites_count = len(favorites)
+        list.append([favorites_count, i + 1])
+
+    list.sort(reverse = True) # いいね数の降順でソート
+    
+    try:
+        favorites_count1 = list[0][0] # リスト1番目のいいね数
+        favorites_count2 = list[1][0]
+        favorites_count3 = list[2][0]
+        travel_id1 = list[0][1] # リスト1番目のid
+        travel_id2 = list[1][1]
+        travel_id3 = list[2][1]
+        no1 = 1 # リスト1番目の順位
+        no2 = 2
+        no3 = 3
+
+        if favorites_count2 == favorites_count1: # リスト2番目が1番目と同じいいね数なら同じ順位に
+            no2 = no1
+        if favorites_count3 == favorites_count2: # リスト3番目が2番目と同じいいね数なら同じ順位に
+            no3 = no2
+
+        travel_no1 = Travel.query.get(travel_id1) # リスト1番目の投稿
+        travel_no2 = Travel.query.get(travel_id2) # リスト2番目の投稿
+        travel_no3 = Travel.query.get(travel_id3) # リスト3番目の投稿
+        
+
+    except IndexError as e:
+        flash('Share された Tabi はまだありません。あなたが最初のShareTabierです！', 'success')
+        return redirect("/new")
+   
+    if (request.method == "GET"):
+        search = ""
+    
+    else: # request.method == "POST"
+        search = request.form["search"]
+    
+    return render_template("travels.html", travels=travels, search=search, travel_no1=travel_no1, travel_no2=travel_no2, travel_no3=travel_no3, no1=no1, no2=no2, no3=no3)
+    
 
 # 個々の投稿を表示するページ
 @app.route("/travels/<int:travel_id>", methods=["GET","POST"])
 @login_required
 def travel_show(travel_id):
     travel = Travel.query.get(travel_id)
-    comments = Comment.query.filter(Comment.travel_id == travel.id)
+    travel_user = User.query.get(travel.user_id)
+    comments = Comment.query.filter(Comment.travel_id == travel_id).all()
+    comments.reverse()  # コメントを新しい順にする
+    comment_users=[]
+    for comment in comments:
+        comment_users.append(User.query.get(comment.user_id))
     favorites = Favorite.query.filter(Favorite.travel_id == travel.id).all()
     favorites_count = len(favorites)
     user_favorite = Favorite.query.filter(Favorite.travel_id == travel.id, Favorite.user_id==current_user.id).all()
     user_favorite_count =len(user_favorite)
-    return render_template("show_travel.html", user=current_user, travel=travel, comments=comments, favorites_count=favorites_count, user_favorite_count=user_favorite_count)
+    
+    return render_template("show_travel.html", current_user=current_user, travel=travel, travel_user=travel_user, comment_data=zip(comments, comment_users), favorites_count=favorites_count, user_favorite_count=user_favorite_count)
 
 
 # 編集画面
@@ -277,7 +322,7 @@ def travel_edit(travel_id):
         travel.location=location
         travel.report=report
         db.session.commit()
-        return redirect(f"/travels/{{ travel_id }}")  
+        return redirect(f"/travels/{ travel_id }")  
   
 
 # 削除機能
@@ -285,17 +330,32 @@ def travel_edit(travel_id):
 @app.route("/travels/<int:travel_id>/delete", methods=["GET"])
 def travel_delete(travel_id):
     travel = Travel.query.get(travel_id)
+    comments = Comment.query.filter(Comment.travel_id==travel_id).all()
+    favorites = Favorite.query.filter(Comment.travel_id==travel_id).all()
+    for comment in comments:
+        db.session.delete(comment)
+    for favorite in favorites:
+        db.session.delete(favorite)
+    os.remove(f"./static/images/post/{ travel.user_id }_{ travel.id }.png")
     db.session.delete(travel)
     db.session.commit()
-    return redirect(f"/travels/{ travel_id }")  
+
+    # 画像削除
+    return redirect("/travels")  
 
 
 # User全員を表示させるページ
 @login_required
-@app.route("/users", methods=["GET"])
+@app.route("/users", methods=["GET", "POST"])
 def users():
     users = User.query.all()
-    return render_template("users.html", users=users)
+    if (request.method == "GET"):
+        search = ""
+    
+    else: # request.method == "POST"
+        search = request.form["search"]
+
+    return render_template("users.html", users=users, search=search)
 
 
 # Userごとのページ
@@ -312,6 +372,9 @@ def user_show(user_id):
 @login_required
 def comment(travel_id):
     body = request.form.get("body")
+    if not body:
+        flash('コメントを入力して下さい', 'warning')
+        return redirect(f"/travels/{ travel_id }")
     comment = Comment(body=body, user_id=current_user.id, user_name=current_user.name, travel_id=travel_id)
     db.session.add(comment)
     db.session.commit()

@@ -5,20 +5,24 @@
 {% endblock %}
 
 {% block main %}
-    <table>
-        <thead>
+    <form action="/users" method="post">
+        <input type="text" name="search" placeholder="ユーザー名を入れてください">
+        <button class="form-control mx-auto w-auto" type="submit">検索</button>
+    </form>
 
-        </thead>
+    <table>
         <tbody>
             {% for user in users %}
-            <tr>
-                <td>{{ user.name }}</td>
-                <td>{{ user.created_at}}</td>
-                <td><a href="/users/{{ user.id }}">link</a></td>
-            </tr>
+                {% if search == "" or search in user.name %}
+                    <tr>
+                        <td><img src="../static/images/icon/{{ user.icon }}.png" class="icon"></td>
+                        <td>{{ user.name }}</td>
+                        <td>{{ user.created_at}}</td>
+                        <td><a href="/users/{{ user.id }}">link</a></td>
+                    </tr>
+                {% endif %}
             {% endfor %}
         </tbody>
-
     </table>
     
 {% endblock %}
