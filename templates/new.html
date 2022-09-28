@@ -12,8 +12,10 @@
 <div class="overlay">
     <div class="container-fluid">
         <div class="row">
-            <form class="w-75 mx-auto p-1" action="/new" method="post" enctype = "multipart/form-data">
-                <div class="py-3">
+            <div class="form-set w-75 mx-auto p-1">
+
+                <form action="/new" method="post" enctype = "multipart/form-data">
+                    <div class="py-3">
                         <div class="col-11 mx-auto">
                             <div class="head-form">
                                 <h2>Post New Tabi !!</h2>
@@ -21,56 +23,48 @@
                             </div>
                         </div>
                         
-                        <div class="col-6 offset-md-3">
+                        <div class="col-6 offset-md-3 text-center mt-5">
+                            <button class="btn-b"><a class="gray" href="/visited_location">クリックして旅行先を選ぼう！！</a></button>
+                        </div>
+    
+                        <div class="col-6 offset-md-3 text-center mt-5">
+                            <input class="form-input" name="location" value="{{ location }}" readonly="readonly">
+                            <br>
+                        </div>
+    
+                        <div class="col-6 offset-md-3 mt-3">
                             <span class="input-item">
                             </span>
                             <input autocomplete="off" autofocus class="form-input" id="title" name="title" type="text" placeholder="タイトル"><br>
                         </div>
-
+    
                         <div class="col-6 offset-md-3 mt-3">
                             <span class="input-item">
                             </span>
-                            <input class="form-input" id="date" name="date" type="date" required>
+                            <input class="form-input" id="date" name="date" type="date">
                             <br>
                         </div>
-
-                        <div class="col-6 offset-md-3 mt-3">
-                            <span class="input-item">
-                            </span>
-                            <input class="form-input" id="location" name="location" placeholder="場所" type="text" required>
-                            <br>
-                        </div>
-
+    
                         <div class="col-10 mx-auto mt-3">
-                            <textarea class="form-input" id="report" name="report" placeholder="どんな旅でしたか？みんなにＳＨＡＲＥしよう！" type="text" rows="7" required></textarea><br>
+                            <textarea class="form-input" id="report" name="report" placeholder="どんな旅でしたか？みんなにＳＨＡＲＥしよう！" type="text" rows="7"></textarea><br>
                         </div>
-
+    
                         <div class="col-6 offset-md-3 text-center mt-3">
-                            <label for="image" class="btn-c mx-auto text-center mb-3">
+                            <label for="image" class="btn-c mx-auto text-center mb-3 bold">
                                 クリックして旅の写真をのせよう！
                             </label>
                             <input class="file-input" id="image" name="image" type="file" accept='image/*' onchange="previewImage(this);" required>
                             <img id="preview" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" style="max-width:300px;">
                         </div>                
                         
-                        <div class="col-4 mx-auto mt-3">
+                        <div class="col-5 mx-auto mt-3">
                             <button type="submit" class="btn btn-gradient"><span>SHARE TABI to the World !!</span></button>
                         </div>
-
-                        <p>{{ location }}</p>
+    
                     </div>
                 </form>
-            </div>      
+            </div>
+        </div>      
     </div>                          
 </div>
-
-        <form action="/new" method="post" enctype = "multipart/form-data">
-            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="title" name="title" placeholder="タイトル" type="text">
-            <input class="form-control mx-auto w-auto" id="date" name="date" type="date">
-            <input class="form-control mx-auto w-auto" name="location" value="{{ location }}" readonly="readonly">
-            <button class="form-control mx-auto w-auto"><a href="/visited_location">旅行した場所を選択する</a></button>
-            <input class="form-control mx-auto w-auto" id="report" name="report" placeholder="レポート" type="text">
-            <input class="form-control mx-auto w-auto" id="image" name="image" type="file">
-            <button class="form-control mx-auto w-auto" type="submit">投稿する</button>
-        </form>
 {% endblock %}

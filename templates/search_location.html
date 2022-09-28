@@ -1,32 +1,61 @@
 {% extends "layout.html" %}
 
+{% block head_css %}
+<link href="/static/stylesheet/new.css" rel="stylesheet">
+{% endblock %}
+
+
 {% block title %}
-    場所検索
+    Search Location
 {% endblock %}
 
 {% block main %}
-<form action="/new" method="get">
-    <button type="submit">登録画面に戻る</button>
-</form>
 
-<form action="/visited_location" method="post">
-    <input class="form-control mx-auto w-auto" type="serch" name="location_name" value="{{ location }}">
-    <button class="form-control mx-auto w-auto" type="submit">検索</button>
-</form>
-<hr>
-{% if message %}
-<p>{{ massage }}</p>
-{% endif %}
-<form action="/new_second" method="post">
-    <table>
-        <tr>
-            <th>検索結果</th>
-        </tr>
-        {% for loc in locations %}
-            <tr>
-                <td><input class="form-control mx-auto w-auto" type="submit" id="location" name="location" value="{{ loc['description'] }}"></td>
-            </tr>
-        {% endfor %}
-    </table>
-</form>
+<!-- <form action="/new" method="get">
+    <button type="submit">登録画面に戻る</button>
+</form> -->
+
+<div class="overlay">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="form-set w-75 mx-auto p-1">
+                <form action="/visited_location" method="post">
+                    <div class="py-3">
+                        <div class="col-11 mx-auto">
+                            <div class="head-form">
+                                <h2>Search Your Tabi Location!!</h2>
+                            </div>
+                        </div>
+                        
+                        <div class="col-6 offset-md-3">
+                            <span class="input-item">
+                            </span>
+                            <input class="form-input" type="text" name="location_name" value="{{ location }}" placeholder="旅行先を検索！">
+                        </div>
+                        
+                        <div class="col-4 mx-auto mt-3">
+                            <button class="btn btn-gradient" type="submit">Let's Search!</button>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="col-9 mx-auto">
+                    <form class="w-100 mx-auto p-1" action="/new_second" method="post">
+                        <ul class="text-start mx-auto p-0">
+                            {% for loc in locations %}
+                                <li class="col-8 offset-2 text-start">
+                                    <input class="form-input" type="submit" id="location" name="location" value="{{ loc['description'] }}">
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </form>
+                </div>
+            </div>
+
+            <!-- {% if message %}
+            <p>{{ massage }}</p>
+            {% endif %} -->
+        </div>      
+    </div>                          
+</div>
 {% endblock %}

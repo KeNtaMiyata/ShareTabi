@@ -13,9 +13,9 @@ body {
 }
 
 /* Start form  attributes */
-form {
+.form-set {
     width: 75%;
-    min-height: 500px;
+    min-height: 800px;
     height: auto;
     border-radius: 5px;
     box-shadow: 0 9px 50px hsla(20, 67%, 75%, 0.31);
@@ -29,7 +29,6 @@ form {
 
 .head-form h2 {
     font-size: 250%;
-    /* font-family: 'Playfair Display', serif; */
     color: #3e403f;
 }
 
@@ -71,7 +70,7 @@ input[class="form-input"]{
     margin-top: 2%;
     padding: 0 15px;
     font-size: 16px;
-    /* font-family: 'Abel', sans-serif; */
+    font-family: 'Abel', sans-serif;
     color: #5E6472;
     outline: none;
     border: none;
@@ -126,6 +125,30 @@ textarea[class="form-input"]{
     display: none;
 }
 
+.btn-b {
+    color: black;
+    width: 75%;
+    margin: 0 auto;
+    font-size: 1rem;
+    position: relative;
+    padding: 1rem 2rem 1rem 1rem;
+    -webkit-transition: all 0.3s;
+    transition: all 0.3s;
+    color: #fff;
+    border-radius: 100vh;
+    background-image: -webkit-gradient(
+        linear,
+        left top,
+        right top,
+        from(#007adf),
+        to(#00ecbc)
+    );
+    background-image: -webkit-linear-gradient(left, #ff69b4 0%, #FFE6FA 100%);
+    background-image: linear-gradient(to right, #ff69b4 0%, #FFE6FA 100%);
+    -webkit-box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
+}
+
 .btn-c {
     width: 75%;
     margin: 0 auto;
@@ -143,8 +166,8 @@ textarea[class="form-input"]{
         from(#007adf),
         to(#00ecbc)
     );
-    background-image: -webkit-linear-gradient(left, #007adf 0%, #00ecbc 100%);
-    background-image: linear-gradient(to right, #007adf 0%, #00ecbc 100%);
+    background-image: -webkit-linear-gradient(left, #a8edea 0%, #00ecbc 100%);
+    background-image: linear-gradient(to right, #a8edea 0%, #00ecbc 100%);
     -webkit-box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
     box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
 }
@@ -241,4 +264,12 @@ button:hover {
     100% {
         transform: translateY(5px);
     }
+}
+
+a{
+    color: #fffafa;
+}
+
+a:hover{
+    color: #fffafa;
 }
