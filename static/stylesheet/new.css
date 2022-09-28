@@ -1,5 +1,5 @@
 /* Fonts Form Google Font ::- https://fonts.google.com/  -:: */
-@import url('https://fonts.googleapis.com/css?family=Abel|Abril+Fatface|Alegreya|Arima+Madurai|Dancing+Script|Dosis|Merriweather|Oleo+Script|Overlock|PT+Serif|Pacifico|Playball|Playfair+Display|Share|Unica+One|Vibur');
+/* @import url('https://fonts.googleapis.com/css?family=Abel|Abril+Fatface|Alegreya|Arima+Madurai|Dancing+Script|Dosis|Merriweather|Oleo+Script|Overlock|PT+Serif|Pacifico|Playball|Playfair+Display|Share|Unica+One|Vibur'); */
 
 /* Start body rules */
 body {
@@ -8,8 +8,6 @@ body {
     background-attachment: fixed;
     background-repeat: no-repeat;
 
-    font-family: 'Vibur', cursive;
-    font-family: 'Abel', sans-serif;
     opacity: .95;
 /* background-image: linear-gradient(to top, #d9afd9 0%, #97d9e1 100%); */
 }
@@ -31,7 +29,7 @@ form {
 
 .head-form h2 {
     font-size: 250%;
-    font-family: 'Playfair Display', serif;
+    /* font-family: 'Playfair Display', serif; */
     color: #3e403f;
 }
 
@@ -73,7 +71,7 @@ input[class="form-input"]{
     margin-top: 2%;
     padding: 0 15px;
     font-size: 16px;
-    font-family: 'Abel', sans-serif;
+    /* font-family: 'Abel', sans-serif; */
     color: #5E6472;
     outline: none;
     border: none;
@@ -91,7 +89,7 @@ textarea[class="form-input"]{
     margin-top: 2%;
     padding: 0 15px;
     font-size: 16px;
-    font-family: 'Abel', sans-serif;
+    /* font-family: 'Abel', sans-serif; */
     color: #5E6472;
     outline: none;
     border: none;
