@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    場所検索
+{% endblock %}
+
+{% block main %}
+<form action="/new" method="get">
+    <button type="submit">登録画面に戻る</button>
+</form>
+
+<form action="/visited_location" method="post">
+    <input class="form-control mx-auto w-auto" type="serch" name="location_name" value="{{ location }}">
+    <button class="form-control mx-auto w-auto" type="submit">検索</button>
+</form>
+<hr>
+{% if message %}
+<p>{{ massage }}</p>
+{% endif %}
+<form action="/new_second" method="post">
+    <table>
+        <tr>
+            <th>検索結果</th>
+        </tr>
+        {% for loc in locations %}
+            <tr>
+                <td><input class="form-control mx-auto w-auto" type="submit" id="location" name="location" value="{{ loc['description'] }}"></td>
+            </tr>
+        {% endfor %}
+    </table>
+</form>
+{% endblock %}

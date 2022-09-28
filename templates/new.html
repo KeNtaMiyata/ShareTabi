@@ -64,4 +64,13 @@
     </div>                          
 </div>
 
+        <form action="/new" method="post" enctype = "multipart/form-data">
+            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="title" name="title" placeholder="タイトル" type="text">
+            <input class="form-control mx-auto w-auto" id="date" name="date" type="date">
+            <input class="form-control mx-auto w-auto" name="location" value="{{ location }}" readonly="readonly">
+            <button class="form-control mx-auto w-auto"><a href="/visited_location">旅行した場所を選択する</a></button>
+            <input class="form-control mx-auto w-auto" id="report" name="report" placeholder="レポート" type="text">
+            <input class="form-control mx-auto w-auto" id="image" name="image" type="file">
+            <button class="form-control mx-auto w-auto" type="submit">投稿する</button>
+        </form>
 {% endblock %}
