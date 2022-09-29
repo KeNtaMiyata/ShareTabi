@@ -17,6 +17,7 @@ img,abbr,acronym,fieldset{border:0;}
 /* font  */
 @import url('https://fonts.googleapis.com/css2?family=Caveat&display=swap');
 
+
 /* flash */
 .warning
 {
@@ -31,9 +32,8 @@ img,abbr,acronym,fieldset{border:0;}
 }
 
 
-
 body{
-	font-family: 'Caveat', cursive;
+	font-family: 'Caveat', cursive, 'M PLUS 1', sans-serif;
 	font-weight: 300;
 	-webkit-text-size-adjust:100%;
 	overflow-x: hidden;
