@@ -6,6 +6,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin, LoginManager, login_user, logout_user, login_required, current_user
 from flask_session import Session # 使わない
 from werkzeug.security import check_password_hash, generate_password_hash
+from dotenv import load_dotenv
 import datetime
 import os
 import pytz
@@ -14,6 +15,9 @@ import googlemaps
 # アップロードされる拡張子の制限
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'gif'])
 from helpers import show_datetime, allowed_file
+
+# 隠しファイルのロード
+load_dotenv('.env') 
 
 app = Flask(__name__)
 
@@ -27,8 +31,7 @@ app.config["TEMPLATES_AUTO_RELOAD"] = True # Ensure templates are auto-reloaded
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False # SADeprecationWarning: SQLALCHEMY_TRACK_MODIFICATIONS adds significant overhead and will be disabled by default in the future.
 
 # Google Map API Keyの設定
-# app.config['GOOGLEMAPS_KEY'] = "AIzaSyDDJgw-Gp8YTC6it7DdakobT-rIfrVXzmo" 
-googleapikey = 'AIzaSyDDJgw-Gp8YTC6it7DdakobT-rIfrVXzmo'
+googleapikey = os.environ.get("GOOGLE_MAPS_APIKEY")
 client = googlemaps.Client(key=googleapikey)
 # html でshow_datetimeを使えるようにする
 app.jinja_env.filters["show_datetime"] = show_datetime
